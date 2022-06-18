@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&family=Yusei+Magic&display=swap');
+
+:root {
+  --amoor-main-color: #393939;
+  --amoor-light-color: #EEEEEE;
+  --amoor-pink-color: #FAC5DE;
+  --amoor-white-color: #F5F5F5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--amoor-light-color);
+  color: var(--amoor-main-color);
+  font-family: 'Dosis', sans-serif;
+  text-align: center;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+p,
+a {
+  text-decoration: none;
+  color: var(--amoor-main-color);
+}
+
+.container-fluid {
+  padding: 7% 10%;
+  font-size: 0.95rem;
+}
+
+.container-fluid-sm {
+  padding: 4% 10%;
+}
+
+header {
+  min-height: 60px;
+  text-align: right;
+}
+
+/* Header */
+.navbar-brand {
+  font-family: 'Yusei Magic', sans-serif;
+  font-size: 4rem;
+}
+
+.navbar-faq {
+  font-size: 3rem;
+  justify-content: flex-end;
+}
+
+/* Footer */
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  min-height: 60px;
+}
+
+.footer-creator {
+  font-size: 2.5rem;
+}
+
+.footer-creator a {
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--amoor-main-color);
+}
+
+.footer-creator a:hover {
+  font-size: 2.65rem;
+  transition: 0.5s;
+}
+
+/* Home */
+.home-section {
+  min-height: calc(100vh - 300px);
+}
+
+.home-row {
+  height: 100%;
+  justify-content: center;
+  align-content: center;
+}
+
+.home-heading {
+  font-family: 'Yusei Magic', sans-serif;
+  font-size: 14rem;
+  font-weight: 400;
+}
+
+.home-btns {
+  min-height: 280px;
+  margin-top: 20%;
+  display: grid;
+  text-align: center;
+  justify-content: center;
+  align-content: space-between;
+}
+
+.btn {
+  text-align: center;
+  justify-content: center;
+  font-size: 4rem;
+  line-height: 6rem;
+  font-weight: 300;
+  min-width: 300px;
+  border-radius: 60px;
+  padding: 12px 65px;
+  margin-top: 50px;
+}
+
+.btn-dark {
+  background: var(--amoor-main-color);
+  color: var(--amoor-light-color);
+}
+
+.btn-pink {
+  background: var(--amoor-pink-color);
+  color: var(--amoor-main-color);
+}
