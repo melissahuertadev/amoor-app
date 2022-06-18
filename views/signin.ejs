@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+
+<section class="signin-section container-fluid">
+  <div class="row signin-row">
+    <div class="col-lg-6">
+      <form action="/signin" method="POST">
+        <div class="form-group">
+          <input type="email" class="form-control" name="email" placeholder="E-mail">
+          <input type="password" class="form-control" name="password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-dark">Sign in</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

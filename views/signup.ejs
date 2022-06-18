@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+<section class="signup-section container-fluid">
+  <div class="row signup-row">
+    <div class="col-lg-6">
+      <form action="/signup" method="POST">
+        <div class="form-group">
+          <input type="name" class="form-control" name="username" placeholder="Username">
+          <input type="email" class="form-control" name="email" placeholder="E-mail">
+          <input type="password" class="form-control" name="password" placeholder="Password">
+          <input type="password" class="form-control" name="password-confirmation" placeholder="Confirm password">
+        </div>
+        <button type="submit" class="btn btn-dark">Sign up</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -41,6 +41,10 @@ a {
   padding: 4% 10%;
 }
 
+section {
+  min-height: calc(100vh - 300px);
+}
+
 header {
   min-height: 60px;
   text-align: right;
@@ -85,7 +89,7 @@ header {
   min-height: calc(100vh - 300px);
 }
 
-.home-row {
+.home-row, .signin-row, .signup-row {
   height: 100%;
   justify-content: center;
   align-content: center;
@@ -126,4 +130,26 @@ header {
 .btn-pink {
   background: var(--amoor-pink-color);
   color: var(--amoor-main-color);
+}
+
+/* Sign In */
+.form-group {
+  display: grid;
+  align-content: center;
+  min-height: 660px;
+  margin-bottom: 120px;
+}
+
+.form-control {
+  min-height: 110px;
+  background: #F5F5F5;
+  border: 2px solid #393939;
+  border-radius: 30px;
+  font-size: 2.65rem;
+  padding-left: 32px;
+  margin-bottom: 76px;
+}
+
+.form-control:last-child {
+  margin-bottom: 0;
 }
