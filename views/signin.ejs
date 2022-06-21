@@ -3,10 +3,11 @@
 <section class="signin-section container-fluid">
   <div class="row signin-row">
     <div class="col-lg-6">
-      <form action="/signin" method="POST">
+      <form action="/signin" method="POST" autocomplete="off">
         <div class="form-group">
-          <input type="email" class="form-control" name="email" placeholder="E-mail">
-          <input type="password" class="form-control" name="password" placeholder="Password">
+          <input id="si-email" type="email" class="form-control" name="email" placeholder="E-mail" value="<%= email %>" autocomplete="off">
+          <input id="si-password" type="password" class="form-control" name="password" placeholder="Password" value="<%= password %>" autocomplete="off">
+          <span> <%= errMsg %> </span>
         </div>
         <button type="submit" class="btn btn-dark">Sign in</button>
       </form>
