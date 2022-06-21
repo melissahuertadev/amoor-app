@@ -32,6 +32,10 @@ a {
   color: var(--amoor-main-color);
 }
 
+a:hover, a:active {
+  color: var(--amoor-pink-color);
+}
+
 .container-fluid {
   padding: 7% 10%;
   font-size: 0.95rem;
@@ -51,9 +55,16 @@ header {
 }
 
 /* Header */
+.header-auth {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .navbar-brand {
   font-family: 'Yusei Magic', sans-serif;
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
 .navbar-faq {
