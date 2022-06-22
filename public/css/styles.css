@@ -30,9 +30,11 @@ p,
 a {
   text-decoration: none;
   color: var(--amoor-main-color);
+  margin-bottom: 0;
 }
 
-a:hover, a:active {
+a:hover,
+a:active {
   color: var(--amoor-pink-color);
 }
 
@@ -54,6 +56,18 @@ header {
   text-align: right;
 }
 
+/* Buttons */
+.btn-dark {
+  background: var(--amoor-main-color);
+  color: var(--amoor-light-color);
+}
+
+.btn-pink {
+  background: var(--amoor-pink-color);
+  color: var(--amoor-main-color);
+}
+
+
 /* Header */
 .header-auth {
   display: flex;
@@ -64,11 +78,11 @@ header {
 
 .navbar-brand {
   font-family: 'Yusei Magic', sans-serif;
-  font-size: 3rem;
+  font-size: 1.5rem;
 }
 
 .navbar-faq {
-  font-size: 3rem;
+  font-size: 1.5rem;
   justify-content: flex-end;
 }
 
@@ -81,7 +95,7 @@ header {
 }
 
 .footer-creator {
-  font-size: 2.5rem;
+  font-size: 1rem;
 }
 
 .footer-creator a {
@@ -91,13 +105,13 @@ header {
 }
 
 .footer-creator a:hover {
-  font-size: 2.65rem;
+  font-size: 1.15rem;
   transition: 0.5s;
 }
 
 /* Home */
 .home-section {
-  min-height: calc(100vh - 300px);
+  min-height: calc(100vh - 120px);
 }
 
 .home-row,
@@ -110,12 +124,15 @@ header {
 
 .home-heading {
   font-family: 'Yusei Magic', sans-serif;
-  font-size: 14rem;
+  font-size: 6rem;
   font-weight: 400;
 }
 
+.home-enter {
+  font-size: 2.15rem;
+}
+
 .home-btns {
-  min-height: 280px;
   margin-top: 20%;
   display: grid;
   text-align: center;
@@ -126,23 +143,13 @@ header {
 .btn {
   text-align: center;
   justify-content: center;
-  font-size: 4rem;
-  line-height: 6rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
   font-weight: 300;
-  min-width: 300px;
+  min-width: 100px;
   border-radius: 60px;
-  padding: 12px 65px;
-  margin-top: 50px;
-}
-
-.btn-dark {
-  background: var(--amoor-main-color);
-  color: var(--amoor-light-color);
-}
-
-.btn-pink {
-  background: var(--amoor-pink-color);
-  color: var(--amoor-main-color);
+  padding: 10px 35px;
+  margin-top: 18px;
 }
 
 /* Sign In */
@@ -173,3 +180,87 @@ header {
 .form-control:last-child {
   margin-bottom: 0;
 }
+
+/* Extra small devices (phones, 600px and down) */
+/* @media only screen and (max-width: 600px) {
+
+
+} */
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  /* Header */
+  .navbar-faq {
+    font-size: 1.5rem;
+  }
+
+  /* Footer */
+  .footer-creator {
+    font-size: 1.25rem;
+  }
+
+  /* Buttons */
+  .btn {
+    font-size: 1.425rem;
+    line-height: 1.7rem;
+    min-width: 100px;
+    padding: 8px 25px;
+  }
+
+  /* Home */
+  .home-enter {
+    font-size: 1.85rem;
+  }
+
+  .home-btns {
+    display: flex;
+    text-align: center;
+    align-content: space-between;
+  }
+
+  .home-btns .btn {
+    margin-top: 0;
+  }
+
+  .home-btns .btn:first-child {
+    margin-right: 20px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .container-fluid-sm {
+    padding: 2% 7%;
+  }
+
+  .container-fluid {
+    padding: 4% 7%;
+  }
+
+  header, #footer {
+    min-height: 20px;
+  }
+
+  .home-section {
+    min-height: calc(100vh - 60px);
+}
+
+  /* Buttons */
+  .btn {
+    font-size: 1.75rem;
+    line-height: 2rem;
+    min-width: 120px;
+    padding: 10px 29px;
+  }
+
+  /* Home */
+  .home-btns {
+    margin: auto;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
