@@ -156,29 +156,29 @@ header {
 .form-group {
   display: grid;
   align-content: center;
-  min-height: 660px;
-  margin-bottom: 120px;
+  min-height: 400px;
   font-size: 2.6rem;
+  margin: 0 10px;
 }
 
 .form-group span {
   text-align: start;
-  padding-left: 32px;
   color: firebrick;
+  font-size: 1.15rem;
+  margin-top: 5px;
 }
 
 .form-control {
-  min-height: 110px;
   background: #F5F5F5;
-  border: 2px solid #393939;
-  border-radius: 30px;
-  font-size: 2.65rem;
-  padding-left: 32px;
-  margin-bottom: 76px;
+  border-radius: 15px;
+  border: 1px solid #393939;
+  font-size: 1.15rem;
+  padding-left: 20px;
+  margin-top: 25px;
 }
 
-.form-control:last-child {
-  margin-bottom: 0;
+.form-control:first-child {
+  margin-top: 0;
 }
 
 /* Extra small devices (phones, 600px and down) */
@@ -189,6 +189,7 @@ header {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
+
   /* Header */
   .navbar-faq {
     font-size: 1.5rem;
@@ -228,7 +229,19 @@ header {
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {}
+@media only screen and (min-width: 768px) {
+  /* Sign up, Sign in form*/
+  .form-group {
+    margin: auto;
+ 
+    justify-self: center;
+  }
+
+  .form-control {
+    height: 50px;
+    font-size: 1.3rem;
+  }
+}
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
@@ -240,13 +253,14 @@ header {
     padding: 4% 7%;
   }
 
-  header, #footer {
+  header,
+  #footer {
     min-height: 20px;
   }
 
   .home-section {
     min-height: calc(100vh - 60px);
-}
+  }
 
   /* Buttons */
   .btn {
@@ -260,6 +274,35 @@ header {
   .home-btns {
     margin: auto;
   }
+
+  /* Form */
+  .form-group {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .form-group span {
+    font-size: 1.2rem;
+    padding-left: 0;
+    margin-top: 20px;
+  }
+
+  .form-control {
+    display: inherit;
+    margin-top: 0;
+    height: 70px;
+    font-size: 1.5rem;
+  }
+
+  .form-control:nth-child(odd) {
+    margin-right: 25px;
+  }
+
+  #signup-form .form-control:nth-last-child(-n+2)  {
+    margin-top: 25px;
+  }
+
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
