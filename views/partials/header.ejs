@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
   <title>Amoor App</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
@@ -13,7 +14,7 @@
 </head>
 
 <body>
-  <% if(event === "auth") { %>
+  <% if(event === "non-auth") { %>
     <header class="container-fluid-sm header-auth">
       <a href="/" class="navbar-brand">Amoor</a>
   <% } else { %>
