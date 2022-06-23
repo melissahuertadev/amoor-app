@@ -14,13 +14,27 @@
 </head>
 
 <body>
-  <% if(event === "non-auth") { %>
-    <header class="container-fluid-sm header-auth">
-      <a href="/" class="navbar-brand">Amoor</a>
-  <% } else { %>
-    <header class="container-fluid-sm">
-  <% } %>
-      <a class="navbar-faq" href="/faq">
-        <i class="fa-regular fa-circle-question"></i>
-      </a>
-    </header>
+  <% switch(event) {
+     case "auth" : %>
+      <header class="container-fluid-sm header-auth">
+        <a href="/" class="navbar-brand">Amoor</a>
+        <a class="navbar-icon" href="/settings">
+          <i class="fa-solid fa-gear"></i>
+        </a>
+      </header>
+  <% break;
+    case "non-auth" : %>
+      <header class="container-fluid-sm header-auth">
+        <a href="/" class="navbar-brand">Amoor</a>
+        <a class="navbar-icon" href="/faq">
+          <i class="fa-regular fa-circle-question"></i>
+        </a>
+      </header>
+  <% break;
+    default: %>
+      <header class="container-fluid-sm">
+        <a class="navbar-icon" href="/faq">
+          <i class="fa-regular fa-circle-question"></i>
+        </a>
+      </header>
+    <% }%>

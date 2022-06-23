@@ -1,0 +1,19 @@
+<%- include('partials/header', {event: "auth"}) %>
+
+<section class="signup-section container-fluid">
+  <div class="row addnew-row">
+    <div class="col-lg-10 col-md-6 col-sm-6">
+      <form id="addnew-form" action="/signup" method="POST">
+        <div class="form-group row">
+          <input type="name" class="form-control col-lg-5" name="amoor-name1" placeholder="Your name">
+          <input type="name" class="form-control col-lg-5" name="amoor-name2" placeholder="Your amoor's name">
+          <input type="date" class="form-control col-lg-5" name="date" placeholder="Date of celebration">
+          <textarea style="resize:none" class="form-control col-lg-5" rows="2" name="message" placeholder="Message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-dark">Add</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
