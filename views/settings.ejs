@@ -1,0 +1,28 @@
+<%- include('partials/header', {event: "auth" })%>
+
+    <section class="settings-section container-fluid">
+        <div id="settings-accordion">
+            <!-- Your amoors toggle -->
+            <h5 class="settings-subtitle">
+                <button class="btn settings-btn" data-toggle="collapse" data-target="#your-amoors" aria-expanded="false"
+                    aria-controls="your-amoors">
+                    > Your amoors
+                </button>
+            </h5>
+            <div id="your-amoors" class="collapse" data-parent="#settings-accordion">
+                <!-- All the amoors created by an user -->
+                <div class="amoor-item">
+                    <p>Garfield & Arlene</p>
+                    <button class="btn-dark btn-delete"> Delete </button>
+                </div>
+                <div class="amoor-item">
+                    <p>Garfield & Jhon</p>
+                    <button class="btn-dark btn-delete"> Delete </button>
+                </div>
+            </div>
+
+            <%- include('partials/faq') %>            
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>

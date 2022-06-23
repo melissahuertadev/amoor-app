@@ -265,6 +265,70 @@ header {
   color: var(--amoor-pink-color);
 }
 
+/* Settings */
+.settings-section {
+  text-align: left;
+  text-decoration: none;
+}
+
+.settings-subtitle {
+  margin-bottom: 35px;
+}
+
+.amoor-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  margin-left: 15px;
+  font-size: 1.25rem;
+}
+
+.settings-btn {
+  padding: 0;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  text-align: left;
+}
+
+.btn-delete {
+  text-align: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 100;
+  border-radius: 6px;
+  padding: 0 17px;
+}
+
+.faq-question {
+  margin-bottom: 24px;
+  margin-left: 15px;
+}
+
+.faq-question-title {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.faq-subtitle .collapsed:after {
+  position: absolute;
+  content: '';
+  border-bottom: 1px solid var(--amoor-main-color);
+  width: 232px;
+  bottom: -5px;
+  left: 18px;
+}
+
+
+.faq-question-response {
+  font-size: 1.225rem;
+  line-height: 1.5rem;
+  font-weight: 200;
+  margin: 16px 0 22px;
+}
 
 /* Extra small devices (phones, 600px and down) */
 /* @media only screen and (max-width: 600px) {
@@ -318,6 +382,20 @@ header {
   .home-btns .btn:first-child {
     margin-right: 20px;
   }
+
+  .faq-subtitle .collapsed:after {
+    left: 42px;
+  }
+
+  .amoor-item {
+    font-size: 1.425rem;
+    margin-left: 42px;
+  }
+
+  .faq-question-response {
+    margin-left: 30px;
+  }
+
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -423,11 +501,18 @@ header {
   .success-heading {
     font-size: 60px;
     line-height: 75px;
-  }  
+  }
+
+  .amoor-item {
+    font-size: 1.75rem;
+    margin-left: 42px;
+  }
+
+  .btn-delete {
+    font-size: 1.6rem;
+  }
 
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-  
-}
+@media only screen and (min-width: 1200px) {}
