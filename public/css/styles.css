@@ -180,9 +180,10 @@ header {
 }
 
 .form-control {
-  background: #F5F5F5;
+  height: 45px;
+  background: var(--amoor-white-color);
   border-radius: 15px;
-  border: 1px solid #393939;
+  border: 1px solid var(--amoor-main-color);
   font-size: 1.15rem;
   padding-left: 20px;
   margin-top: 25px;
@@ -239,7 +240,7 @@ header {
 
 /* Add New */
 #addnew-form .form-control:first-child {
-  margin-top: 30px;
+  margin-top: 8px;
 }
 
 /* Success */
@@ -351,7 +352,10 @@ header {
   }
 
   .home-section {
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - 100px);
+  }
+
+  .home-row {
     margin-top: 13%;
   }
 
@@ -370,6 +374,11 @@ header {
   /* Home */
   .home-btns {
     margin: auto;
+  }
+
+  /* Amoors Wall */
+  .amoors-section {
+    margin-bottom: 0;
   }
 
   /* Form */
@@ -405,6 +414,11 @@ header {
     margin-top: 0;
   }
 
+  #addnew-form textarea {
+    height: 100px;
+    padding-top: 20px;
+  }
+
   /* Success Msg */
   .success-heading {
     font-size: 60px;
@@ -414,4 +428,6 @@ header {
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {}
+@media only screen and (min-width: 1200px) {
+  
+}
