@@ -43,12 +43,12 @@ a:active {
 }
 
 .container-fluid {
-  padding: 7% 10%;
+  padding: 7% 9%;
   font-size: 0.95rem;
 }
 
 .container-fluid-sm {
-  padding: 4% 10%;
+  padding: 4% 9%;
 }
 
 section {
@@ -117,7 +117,10 @@ header {
 /* Home */
 .home-section {
   min-height: calc(100vh - 120px);
-  margin-top: 30%;
+}
+
+.home-container {
+  padding: 0;
 }
 
 .home-row,
@@ -131,8 +134,9 @@ header {
 
 .home-heading {
   font-family: 'Yusei Magic', sans-serif;
-  font-size: 6rem;
+  font-size: 5rem;
   font-weight: 400;
+  margin-top: 30%;
 }
 
 .home-enter {
@@ -238,6 +242,29 @@ header {
   margin-top: 30px;
 }
 
+/* Success */
+.success-msg-section {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-msg-section .col-sm-12 {
+  padding: 0;
+}
+
+.success-heading {
+  font-family: 'Yusei Magic', sans-serif;
+  font-size: 42px;
+  line-height: 68px;
+}
+
+.success-heading span {
+  color: var(--amoor-pink-color);
+}
+
+
 /* Extra small devices (phones, 600px and down) */
 /* @media only screen and (max-width: 600px) {
 
@@ -269,8 +296,8 @@ header {
   }
 
   /* Home */
-  .home-section {
-    margin-top: 10%;
+  .home-heading {
+    margin-top: 12%;
   }
 
   .home-enter {
@@ -325,6 +352,11 @@ header {
 
   .home-section {
     min-height: calc(100vh - 60px);
+    margin-top: 13%;
+  }
+
+  .home-heading {
+    margin-top: 0;
   }
 
   /* Buttons */
@@ -372,6 +404,12 @@ header {
   #addnew-form .form-control:first-child {
     margin-top: 0;
   }
+
+  /* Success Msg */
+  .success-heading {
+    font-size: 60px;
+    line-height: 75px;
+  }  
 
 }
 
