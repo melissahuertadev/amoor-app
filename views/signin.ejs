@@ -5,7 +5,7 @@
     <div class="col-lg-10 col-md-6 col-sm-9">
       <form id="signin-form" action="/signin" method="POST" autocomplete="off">
         <div class="form-group row">
-          <input id="si-email" type="email" class="form-control col-lg-5" name="email" placeholder="E-mail" value="<%= email %>" autocomplete="off">
+          <input id="si-email" type="text" class="form-control col-lg-5" name="username" placeholder="Username or E-mail" value="<%= username %>" autocomplete="off">
           <input id="si-password" type="password" class="form-control col-lg-5" name="password" placeholder="Password" value="<%= password %>" autocomplete="off">
           <span class="col-lg-10"> <%= errMsg %> </span>
         </div>

@@ -106,13 +106,17 @@ section {
 }
 
 /******** Header ********/
+header {
+  font-size: 1.5rem;
+}
+
 .header-auth {
   display: flex;
   text-align: center;
   align-items: center;
   justify-content: space-between;
-  font-size: 1.5rem;
 }
+
 
 /******** Footer ********/
 .footer-creator a:hover {
@@ -299,4 +303,10 @@ section {
   line-height: 1.5rem;
   font-weight: 200;
   margin: 16px 0 22px;
+}
+
+.settings-logout {
+  position: absolute;
+  bottom: 100px;
+  right: 50px;
 }
