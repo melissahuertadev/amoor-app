@@ -1,0 +1,182 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .container-fluid-sm {
+        padding: 2% 10%;
+    }
+
+    /* Header */
+    .header-icon {
+        font-size: 1.5rem;
+    }
+
+    /* Footer */
+    .footer-creator {
+        font-size: 1.25rem;
+    }
+
+    /* Buttons */
+    .btn {
+        font-size: 1.425rem;
+        line-height: 1.7rem;
+        min-width: 100px;
+        padding: 8px 25px;
+    }
+
+    /* Home */
+    .home-heading {
+        margin-top: 12%;
+    }
+
+    .home-icon-enter {
+        font-size: 1.85rem;
+    }
+
+    .home-btns {
+        display: flex;
+        text-align: center;
+        align-content: space-between;
+    }
+
+    .home-btns .btn {
+        margin-top: 0;
+    }
+
+    .home-btns .btn:first-child {
+        margin-right: 20px;
+    }
+
+    .faq-subtitle .collapsed:after {
+        left: 42px;
+    }
+
+    .amoor-item {
+        font-size: 1.425rem;
+        margin-left: 42px;
+    }
+
+    .faq-item-response {
+        margin-left: 30px;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+    /* Forms */
+    .form-group {
+        margin: auto;
+        justify-self: center;
+    }
+
+    .form-control {
+        height: 50px;
+        font-size: 1.3rem;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+    /* Global Style */
+    .container-fluid-sm {
+        padding: 2% 7%;
+    }
+
+    .container-fluid {
+        padding: 4% 7%;
+    }
+
+    header,
+    footer {
+        min-height: 20px;
+    }
+
+    /* Buttons */
+    .btn {
+        font-size: 1.75rem;
+        line-height: 2rem;
+        min-width: 120px;
+        padding: 10px 29px;
+    }
+
+    /* Home */
+    .home-section {
+        min-height: calc(100vh - 100px);
+    }
+
+    .home-row {
+        margin-top: 13%;
+    }
+
+    .home-heading {
+        margin-top: 0;
+    }
+
+    .home-btns {
+        margin: auto;
+    }
+
+    /* Amoors Wall */
+    .amoors-section {
+        margin-bottom: 0;
+    }
+
+    /* Forms */
+    .form-group {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+    }
+
+    .form-group span {
+        font-size: 1.2rem;
+        padding-left: 0;
+        margin-top: 20px;
+    }
+
+    .form-control {
+        display: inherit;
+        margin-top: 0;
+        height: 70px;
+        font-size: 1.5rem;
+    }
+
+    .form-control:nth-child(odd) {
+        margin-right: 25px;
+    }
+
+    #signup-form .form-control:nth-last-child(-n+2),
+    #addnew-form .form-control:nth-last-child(-n+2) {
+        margin-top: 25px;
+    }
+
+    #addnew-form .form-control:first-child {
+        margin-top: 0;
+    }
+
+    #addnew-form textarea {
+        height: 100px;
+        padding-top: 20px;
+    }
+
+    /* Success Msg */
+    .success-heading {
+        font-size: 60px;
+        line-height: 75px;
+    }
+
+    .amoor-item {
+        font-size: 1.75rem;
+        margin-left: 42px;
+    }
+
+    .btn-delete {
+        font-size: 1.6rem;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&family=Yusei+Magic&display=swap');
 
+/*** Global Style ***/
 :root {
   --amoor-main-color: #393939;
   --amoor-light-color: #EEEEEE;
@@ -26,6 +27,20 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+header {
+  min-height: 60px;
+  text-align: right;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  min-height: 60px;
+  font-size: 1rem;
+  background-color: var(--amoor-light-color);
+}
+
 p,
 a {
   text-decoration: none;
@@ -33,13 +48,25 @@ a {
   margin-bottom: 0;
 }
 
+a:hover,
+a:active {
+  text-decoration: none;
+  color: var(--amoor-pink-color);
+}
+
+section {
+  min-height: calc(100vh - 120px);
+}
+
+
 .row {
   margin: auto;
 }
 
-a:hover,
-a:active {
-  color: var(--amoor-pink-color);
+.center-row {
+  height: 100%;
+  justify-content: center;
+  align-content: center;
 }
 
 .container-fluid {
@@ -51,106 +78,11 @@ a:active {
   padding: 4% 9%;
 }
 
-section {
-  min-height: calc(100vh - 120px);
-}
-
-header {
-  min-height: 60px;
-  text-align: right;
+.font-amoor {
+  font-family: 'Yusei Magic', sans-serif;
 }
 
 /* Buttons */
-.btn-dark {
-  background: var(--amoor-main-color);
-  color: var(--amoor-light-color);
-}
-
-.btn-pink {
-  background: var(--amoor-pink-color);
-  color: var(--amoor-main-color);
-}
-
-
-/* Header */
-.header-auth {
-  display: flex;
-  text-align: center;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.navbar-brand {
-  font-family: 'Yusei Magic', sans-serif;
-  font-size: 1.5rem;
-}
-
-.navbar-icon {
-  font-size: 1.5rem;
-  justify-content: flex-end;
-}
-
-/* Footer */
-#footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  min-height: 60px;
-  background-color: var(--amoor-light-color);
-}
-
-.footer-creator {
-  font-size: 1rem;
-}
-
-.footer-creator a {
-  text-decoration: none;
-  font-weight: bold;
-  color: var(--amoor-main-color);
-}
-
-.footer-creator a:hover {
-  font-size: 1.15rem;
-  transition: 0.5s;
-}
-
-/* Home */
-.home-section {
-  min-height: calc(100vh - 120px);
-}
-
-.home-container {
-  padding: 0;
-}
-
-.home-row,
-.signin-row,
-.signup-row,
-.addnew-row {
-  height: 100%;
-  justify-content: center;
-  align-content: center;
-}
-
-.home-heading {
-  font-family: 'Yusei Magic', sans-serif;
-  font-size: 5rem;
-  font-weight: 400;
-  margin-top: 30%;
-}
-
-.home-enter {
-  font-size: 2.15rem;
-}
-
-.home-btns {
-  margin-top: 20%;
-  display: grid;
-  text-align: center;
-  justify-content: center;
-  align-content: space-between;
-}
-
 .btn {
   text-align: center;
   justify-content: center;
@@ -163,7 +95,55 @@ header {
   margin-top: 18px;
 }
 
-/* Sign In, Sign Up */
+.btn-dark {
+  background: var(--amoor-main-color);
+  color: var(--amoor-light-color);
+}
+
+.btn-pink {
+  background: var(--amoor-pink-color);
+  color: var(--amoor-main-color);
+}
+
+/******** Header ********/
+.header-auth {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.5rem;
+}
+
+/******** Footer ********/
+.footer-creator a:hover {
+  font-size: 1.15rem;
+  transition: 0.5s;
+}
+
+/******** Home ********/
+.home-container {
+  padding: 0;
+}
+
+.home-heading {
+  font-size: 5rem;
+  font-weight: 400;
+  margin-top: 30%;
+}
+
+.home-icon-enter {
+  font-size: 2.15rem;
+}
+
+.home-btns {
+  margin-top: 20%;
+  display: grid;
+  text-align: center;
+  justify-content: center;
+  align-content: space-between;
+}
+
+/******** Forms ********/
 .form-group {
   display: grid;
   align-content: center;
@@ -193,21 +173,22 @@ header {
   margin-top: 0;
 }
 
-/* Amoors View */
+/**** Add New ***/
+#addnew-form .form-control:first-child {
+  margin-top: 8px;
+}
+
+/******** Amoors Wall ********/
 .amoors-section {
   margin-bottom: 50px;
 }
 
-.amoors-addnew {
+.amoors-addnew-icon {
   font-size: 3rem;
 }
 
-.single-amoor-card {
+.amoor-card {
   margin: 30px 0;
-}
-
-.amoor-initials {
-  display: flex;
 }
 
 .initial {
@@ -238,25 +219,19 @@ header {
   line-height: 25px;
 }
 
-/* Add New */
-#addnew-form .form-control:first-child {
-  margin-top: 8px;
-}
 
-/* Success */
-.success-msg-section {
+/******** Success Message ********/
+.success-section {
   display: flex;
-  text-align: center;
   align-items: center;
-  justify-content: center;
+  text-align: center;
 }
 
-.success-msg-section .col-sm-12 {
+.success-section .col-sm-12 {
   padding: 0;
 }
 
 .success-heading {
-  font-family: 'Yusei Magic', sans-serif;
   font-size: 42px;
   line-height: 68px;
 }
@@ -265,169 +240,63 @@ header {
   color: var(--amoor-pink-color);
 }
 
-
-/* Extra small devices (phones, 600px and down) */
-/* @media only screen and (max-width: 600px) {
-
-
-} */
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-  .container-fluid-sm {
-    padding: 2% 10%;
-  }
-
-  /* Header */
-  .navbar-icon {
-    font-size: 1.5rem;
-  }
-
-  /* Footer */
-  .footer-creator {
-    font-size: 1.25rem;
-  }
-
-  /* Buttons */
-  .btn {
-    font-size: 1.425rem;
-    line-height: 1.7rem;
-    min-width: 100px;
-    padding: 8px 25px;
-  }
-
-  /* Home */
-  .home-heading {
-    margin-top: 12%;
-  }
-
-  .home-enter {
-    font-size: 1.85rem;
-  }
-
-  .home-btns {
-    display: flex;
-    text-align: center;
-    align-content: space-between;
-  }
-
-  .home-btns .btn {
-    margin-top: 0;
-  }
-
-  .home-btns .btn:first-child {
-    margin-right: 20px;
-  }
+/******** Settings, FAQ ********/
+.settings-subtitle {
+  margin-bottom: 35px;
 }
 
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-
-  /* Sign up, Sign in form*/
-  .form-group {
-    margin: auto;
-
-    justify-self: center;
-  }
-
-  .form-control {
-    height: 50px;
-    font-size: 1.3rem;
-  }
+.settings-subtitle-btn {
+  padding: 0;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  text-align: left;
 }
 
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-  .container-fluid-sm {
-    padding: 2% 7%;
-  }
-
-  .container-fluid {
-    padding: 4% 7%;
-  }
-
-  header,
-  #footer {
-    min-height: 20px;
-  }
-
-  .home-section {
-    min-height: calc(100vh - 100px);
-  }
-
-  .home-row {
-    margin-top: 13%;
-  }
-
-  .home-heading {
-    margin-top: 0;
-  }
-
-  /* Buttons */
-  .btn {
-    font-size: 1.75rem;
-    line-height: 2rem;
-    min-width: 120px;
-    padding: 10px 29px;
-  }
-
-  /* Home */
-  .home-btns {
-    margin: auto;
-  }
-
-  /* Amoors Wall */
-  .amoors-section {
-    margin-bottom: 0;
-  }
-
-  /* Form */
-  .form-group {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-  }
-
-  .form-group span {
-    font-size: 1.2rem;
-    padding-left: 0;
-    margin-top: 20px;
-  }
-
-  .form-control {
-    display: inherit;
-    margin-top: 0;
-    height: 70px;
-    font-size: 1.5rem;
-  }
-
-  .form-control:nth-child(odd) {
-    margin-right: 25px;
-  }
-
-  #signup-form .form-control:nth-last-child(-n+2),
-  #addnew-form .form-control:nth-last-child(-n+2) {
-    margin-top: 25px;
-  }
-
-  #addnew-form .form-control:first-child {
-    margin-top: 0;
-  }
-
-  #addnew-form textarea {
-    height: 100px;
-    padding-top: 20px;
-  }
-
-  /* Success Msg */
-  .success-heading {
-    font-size: 60px;
-    line-height: 75px;
-  }  
-
+/* Your amoors */
+.amoor-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  margin-left: 15px;
+  font-size: 1.25rem;
 }
 
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-  
+.btn-delete {
+  text-align: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 100;
+  border-radius: 6px;
+  padding: 0 17px;
+}
+
+/* FAQ */
+.faq-item {
+  margin-bottom: 24px;
+  margin-left: 15px;
+}
+
+.faq-subtitle .collapsed:after {
+  position: absolute;
+  content: '';
+  border-bottom: 1px solid var(--amoor-main-color);
+  width: 232px;
+  bottom: -5px;
+  left: 18px;
+}
+
+.faq-item-question {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.faq-item-response {
+  font-size: 1.225rem;
+  line-height: 1.5rem;
+  font-weight: 200;
+  margin: 16px 0 22px;
 }
