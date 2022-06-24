@@ -9,15 +9,20 @@
                 </button>
             </h5>
             <div id="your-amoors" class="collapse" data-parent="#settings-accordion">
+                <%if (amoors.length <= 0){%>
+                <h5 class="your-amoors-msg">You haven't shared any amoor yet :(</h5>
+
                 <!-- All the amoors created by an user -->
+                <%} else { %>
                 <% amoors.forEach((amoor, index) => { %>
                     <form action="/delete" method="POST">
-                        <div name="hello" class="amoor-item" >
+                        <div class="amoor-item" >
                             <p><%= amoor.name1 %> & <%= amoor.name2 %></p>
                             <button name="index" value="<%= index %>" type="submit" class="btn-dark btn-delete"> Delete </button>
                         </div>
                     </form>
-                  <% }); %>
+                <% }); %>
+                <% } %>
             </div>
             <%- include('partials/faq') %>
             <div class="settings-logout">
