@@ -60,11 +60,19 @@ app.get("/signup", function (req, res) {
 });
 
 app.get("/amoors", function (req, res) {
-  if (req.isAuthenticated()) {
-    res.render("amoors", { auth: "auth" });
-  } else {
-    res.render("amoors", { auth: "non-auth" });
-  }
+  User.find({"amoors": {$ne: null}}, function(err, foundUsers){
+    if(err){
+      console.log(err);
+    } else {
+      if(foundUsers){
+        if (req.isAuthenticated()) {
+          res.render("amoors", { auth: "auth", usersWithAmoors: foundUsers });
+        } else {
+          res.render("amoors", { auth: "non-auth", usersWithAmoors: foundUsers });
+        }
+      }
+    }
+  });
 });
 
 app.get("/faq", function (req, res) {
