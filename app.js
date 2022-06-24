@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   email: { type: String, unique: true },
   password: String,
+  amoors: [{type: Object}],
 });
 
 userSchema.plugin(passportLocalMongoose, { usernameQueryFields: ["email"] });
@@ -98,7 +99,31 @@ app.get("/add", function (req, res) {
   }
 });
 
-/* Sign Up */
+app.get("/success", function (req, res) {
+  if (req.isAuthenticated()) {
+    res.render("success");
+  }
+});
+
+/*************** Add New Amoor ***************/
+app.post("/add", function(req, res){
+  const submittedAmoor = req.body;
+
+  User.findById(req.user.id, function(err, foundUser){
+    if(err){
+      console.log(err);
+    } else {
+      if(foundUser){
+        foundUser.amoors.push(submittedAmoor);
+        foundUser.save(function() {
+          res.redirect("/success");
+        });
+      }
+    }
+  });
+});
+
+/*************** Sign Up ***************/
 app.post("/signup", function (req, res) {
   User.register(
     { username: req.body.username, email: req.body.email },
@@ -116,7 +141,7 @@ app.post("/signup", function (req, res) {
   );
 });
 
-/* Sign In */
+/*************** Sign In ***************/
 app.post("/signin", function (req, res) {
   const user = new User({
     username: req.body.username,
@@ -126,7 +151,6 @@ app.post("/signin", function (req, res) {
   req.login(user, function (err) {
     if (err) {
       console.log(err);
-      console.log(user);
       res.redirect("/signin");
     } else {
       passport.authenticate("local")(req, res, function () {
