@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   email: { type: String, unique: true },
   password: String,
-  amoors: [{type: Object}],
+  amoors: [{ type: Object }],
 });
 
 userSchema.plugin(passportLocalMongoose, { usernameQueryFields: ["email"] });
@@ -60,15 +60,18 @@ app.get("/signup", function (req, res) {
 });
 
 app.get("/amoors", function (req, res) {
-  User.find({"amoors": {$ne: null}}, function(err, foundUsers){
-    if(err){
+  User.find({ amoors: { $ne: null } }, function (err, foundUsers) {
+    if (err) {
       console.log(err);
     } else {
-      if(foundUsers){
+      if (foundUsers) {
         if (req.isAuthenticated()) {
           res.render("amoors", { auth: "auth", usersWithAmoors: foundUsers });
         } else {
-          res.render("amoors", { auth: "non-auth", usersWithAmoors: foundUsers });
+          res.render("amoors", {
+            auth: "non-auth",
+            usersWithAmoors: foundUsers,
+          });
         }
       }
     }
@@ -93,9 +96,20 @@ app.get("/logout", function (req, res) {
 /* The following views NEED authentication:
  * Add News Amoor, Success Message, Settings       */
 app.get("/settings", function (req, res) {
-  if (req.isAuthenticated()) {
-    res.render("settings");
-  }
+
+  User.findById(req.user.id, (err, foundUser) => {
+    if (err) {
+      console.log(err);
+    } else {
+      if (foundUser) {
+        if (req.isAuthenticated()) {
+          res.render("settings", {amoors: foundUser.amoors});
+        }
+      }
+    }
+  });
+
+  
 });
 
 app.get("/add", function (req, res) {
@@ -114,16 +128,16 @@ app.get("/success", function (req, res) {
 });
 
 /*************** Add New Amoor ***************/
-app.post("/add", function(req, res){
+app.post("/add", function (req, res) {
   const submittedAmoor = req.body;
 
-  User.findById(req.user.id, function(err, foundUser){
-    if(err){
+  User.findById(req.user.id, function (err, foundUser) {
+    if (err) {
       console.log(err);
     } else {
-      if(foundUser){
+      if (foundUser) {
         foundUser.amoors.push(submittedAmoor);
-        foundUser.save(function() {
+        foundUser.save(function () {
           res.redirect("/success");
         });
       }
