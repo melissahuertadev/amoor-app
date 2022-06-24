@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   email: { type: String, unique: true },
   password: String,
+  amoors: [{ type: Object }],
 });
 
 userSchema.plugin(passportLocalMongoose, { usernameQueryFields: ["email"] });
@@ -59,11 +60,22 @@ app.get("/signup", function (req, res) {
 });
 
 app.get("/amoors", function (req, res) {
-  if (req.isAuthenticated()) {
-    res.render("amoors", { auth: "auth" });
-  } else {
-    res.render("amoors", { auth: "non-auth" });
-  }
+  User.find({ amoors: { $ne: null } }, function (err, foundUsers) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (foundUsers) {
+        if (req.isAuthenticated()) {
+          res.render("amoors", { auth: "auth", usersWithAmoors: foundUsers });
+        } else {
+          res.render("amoors", {
+            auth: "non-auth",
+            usersWithAmoors: foundUsers,
+          });
+        }
+      }
+    }
+  });
 });
 
 app.get("/faq", function (req, res) {
@@ -84,9 +96,17 @@ app.get("/logout", function (req, res) {
 /* The following views NEED authentication:
  * Add News Amoor, Success Message, Settings       */
 app.get("/settings", function (req, res) {
-  if (req.isAuthenticated()) {
-    res.render("settings");
-  }
+  User.findById(req.user.id, (err, foundUser) => {
+    if (err) {
+      console.log(err);
+    } else {
+      if (foundUser) {
+        if (req.isAuthenticated()) {
+          res.render("settings", {amoors: foundUser.amoors});
+        }
+      }
+    }
+  });  
 });
 
 app.get("/add", function (req, res) {
@@ -98,7 +118,47 @@ app.get("/add", function (req, res) {
   }
 });
 
-/* Sign Up */
+app.get("/success", function (req, res) {
+  if (req.isAuthenticated()) {
+    res.render("success");
+  }
+});
+
+app.post("/delete", function(req, res) {
+  if (req.isAuthenticated()) {
+    User.findById(req.user.id, function(err, foundUser){
+      foundUser.amoors.splice(req.body.index, 1);
+      foundUser.save(function(err){
+        if(!err){
+          res.redirect("/settings");
+        }
+      });
+    });
+  };
+
+  
+});
+  
+
+/*************** Add New Amoor ***************/
+app.post("/add", function (req, res) {
+  const submittedAmoor = req.body;
+
+  User.findById(req.user.id, function (err, foundUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (foundUser) {
+        foundUser.amoors.push(submittedAmoor);
+        foundUser.save(function () {
+          res.redirect("/success");
+        });
+      }
+    }
+  });
+});
+
+/*************** Sign Up ***************/
 app.post("/signup", function (req, res) {
   User.register(
     { username: req.body.username, email: req.body.email },
@@ -116,7 +176,7 @@ app.post("/signup", function (req, res) {
   );
 });
 
-/* Sign In */
+/*************** Sign In ***************/
 app.post("/signin", function (req, res) {
   const user = new User({
     username: req.body.username,
@@ -126,7 +186,6 @@ app.post("/signin", function (req, res) {
   req.login(user, function (err) {
     if (err) {
       console.log(err);
-      console.log(user);
       res.redirect("/signin");
     } else {
       passport.authenticate("local")(req, res, function () {

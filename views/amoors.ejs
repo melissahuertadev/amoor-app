@@ -8,54 +8,23 @@
       </a>
     </div>
   </div>
+
   <div class="row amoors-row">
-    <div class="amoor-card col-lg-3 col-md-6 col-sm-10">
-      <div class="amoor-initials d-flex">
-        <div class="initial">G</div>
-        <div class="initial">A</div>
-      </div>
-      <div class="amoor-info">
-        <h4 class="amoor-names">Garfield & Arlene</h4>
-        <p class="amoor-date">24/01/13</p>
-        <p class="amoor-phrase">"We love lasagna"</p>
-      </div>
-    </div>
-
-    <div class="amoor-card col-lg-3 col-md-6 col-sm-10">
-      <div class="amoor-initials d-flex">
-        <div class="initial">G</div>
-        <div class="initial">A</div>
-      </div>
-      <div class="amoor-info">
-        <h4 class="amoor-names">Garfield & Arlene</h4>
-        <p class="amoor-date">24/01/13</p>
-        <p class="amoor-phrase">"We love lasagna"</p>
-      </div>
-    </div>
-
-    <div class="amoor-card col-lg-3 col-md-6 col-sm-10">
-      <div class="amoor-initials d-flex">
-        <div class="initial">G</div>
-        <div class="initial">A</div>
-      </div>
-      <div class="amoor-info">
-        <h4 class="amoor-names">Garfield & Arlene</h4>
-        <p class="amoor-date">24/01/13</p>
-        <p class="amoor-phrase">"We love lasagna"</p>
-      </div>
-    </div>
-
-    <div class="amoor-card col-lg-3 col-md-6 col-sm-10">
-      <div class="amoor-initials d-flex">
-        <div class="initial">G</div>
-        <div class="initial">A</div>
-      </div>
-      <div class="amoor-info">
-        <h4 class="amoor-names">Garfield & Arlene</h4>
-        <p class="amoor-date">24/01/13</p>
-        <p class="amoor-phrase">"We love lasagna"</p>
-      </div>
-    </div>
+    <% usersWithAmoors.forEach((user) => { %>
+      <% user.amoors.forEach(function(amoor){ %>
+        <div class="amoor-card col-lg-3 col-md-6 col-sm-10">
+          <div class="amoor-initials d-flex">
+            <div class="initial"><%= amoor.name1.charAt(0).toUpperCase(); %></div>
+            <div class="initial"><%= amoor.name2.charAt(0).toUpperCase(); %></div>
+          </div>
+          <div class="amoor-info">
+            <h4 class="amoor-names"><%= amoor.name1 %> & <%= amoor.name2 %></h4>
+            <p class="amoor-date"><%= amoor.date %></p>
+            <p class="amoor-phrase">"<%= amoor.message %>"</p>
+          </div>
+        </div>
+      <% }); %>
+    <% }); %>
   </div>
 </section>
 

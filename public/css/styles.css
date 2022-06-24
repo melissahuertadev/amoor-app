@@ -6,6 +6,7 @@
   --amoor-light-color: #EEEEEE;
   --amoor-pink-color: #FAC5DE;
   --amoor-white-color: #F5F5F5;
+  --amoor-disable-color: #6d6d6d;
 }
 
 * {
@@ -273,6 +274,14 @@ header {
   font-weight: 100;
   border-radius: 6px;
   padding: 0 17px;
+}
+
+.your-amoors-msg {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 24px;
+  margin-left: 15px;
+  color: var(--amoor-disable-color);
 }
 
 /* FAQ */
