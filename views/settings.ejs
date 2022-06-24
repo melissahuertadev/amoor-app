@@ -1,5 +1,4 @@
 <%- include('partials/header', {event: "auth" })%>
-
     <section class="settings-section text-left container-fluid">
         <div id="settings-accordion">
             <!-- Your amoors toggle -->
@@ -11,11 +10,13 @@
             </h5>
             <div id="your-amoors" class="collapse" data-parent="#settings-accordion">
                 <!-- All the amoors created by an user -->
-                <% amoors.forEach((amoor) => { %>
-                    <div class="amoor-item">
-                        <p><%= amoor.name1 %> & <%= amoor.name2 %></p>
-                        <button class="btn-dark btn-delete"> Delete </button>
-                    </div>
+                <% amoors.forEach((amoor, index) => { %>
+                    <form action="/delete" method="POST">
+                        <div name="hello" class="amoor-item" >
+                            <p><%= amoor.name1 %> & <%= amoor.name2 %></p>
+                            <button name="index" value="<%= index %>" type="submit" class="btn-dark btn-delete"> Delete </button>
+                        </div>
+                    </form>
                   <% }); %>
             </div>
             <%- include('partials/faq') %>

@@ -96,7 +96,6 @@ app.get("/logout", function (req, res) {
 /* The following views NEED authentication:
  * Add News Amoor, Success Message, Settings       */
 app.get("/settings", function (req, res) {
-
   User.findById(req.user.id, (err, foundUser) => {
     if (err) {
       console.log(err);
@@ -107,9 +106,7 @@ app.get("/settings", function (req, res) {
         }
       }
     }
-  });
-
-  
+  });  
 });
 
 app.get("/add", function (req, res) {
@@ -126,6 +123,22 @@ app.get("/success", function (req, res) {
     res.render("success");
   }
 });
+
+app.post("/delete", function(req, res) {
+  if (req.isAuthenticated()) {
+    User.findById(req.user.id, function(err, foundUser){
+      foundUser.amoors.splice(req.body.index, 1);
+      foundUser.save(function(err){
+        if(!err){
+          res.redirect("/settings");
+        }
+      });
+    });
+  };
+
+  
+});
+  
 
 /*************** Add New Amoor ***************/
 app.post("/add", function (req, res) {
