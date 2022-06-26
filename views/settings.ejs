@@ -15,7 +15,7 @@
                 <!-- All the amoors created by an user -->
                 <%} else { %>
                 <% amoors.forEach((amoor, index) => { %>
-                    <form action="/delete" method="POST">
+                    <form action="/users/delete" method="POST">
                         <div class="amoor-item" >
                             <p><%= amoor.name1 %> & <%= amoor.name2 %></p>
                             <button name="index" value="<%= index %>" type="submit" class="btn-dark btn-delete"> Delete </button>
@@ -26,7 +26,7 @@
             </div>
             <%- include('partials/faq') %>
             <div class="settings-logout">
-                <a class="btn btn-dark" href="/logout" role="button">Log out</a>
+                <a class="btn btn-dark" href="/users/logout" role="button">Log out</a>
             </div>
         </div>
     </section>
