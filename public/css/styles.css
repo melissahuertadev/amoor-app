@@ -339,3 +339,7 @@ header {
   color: var(--amoor-disable-color);
   font-size: 1rem;
 }
+
+.option-msg {
+  margin-top: 18px;
+}
