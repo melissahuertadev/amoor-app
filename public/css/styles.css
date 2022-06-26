@@ -326,12 +326,16 @@ header {
   font-size: 1rem;
 }
 
-.error-msg {
+.alert-danger {
+  text-align: left;
   color: crimson;
   font-size: 1rem;
+  background-color: #e8e2e2;
+  border-color: #ed143d29;
 }
 
 .info-msg {
+  text-align: left;
   color: var(--amoor-disable-color);
   font-size: 1rem;
 }
