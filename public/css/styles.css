@@ -319,3 +319,19 @@ header {
   bottom: 100px;
   right: 50px;
 }
+
+/** Messages **/
+.succeed-msg {
+  color: darkslateblue;
+  font-size: 1rem;
+}
+
+.error-msg {
+  color: crimson;
+  font-size: 1rem;
+}
+
+.info-msg {
+  color: var(--amoor-disable-color);
+  font-size: 1rem;
+}

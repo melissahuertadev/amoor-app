@@ -48,7 +48,11 @@ passport.deserializeUser(User.deserializeUser());
 /* The following views don't need authentication:
  * Home, Sign In, Sign Up, Amoors' Wall            */
 app.get("/", function (req, res) {
-  res.render("home");
+  res.redirect("/amoors");
+});
+
+app.get("/home", function (req, res) {
+  res.render("home", {message: ""});
 });
 
 app.get("/signin", function (req, res) {
@@ -87,7 +91,7 @@ app.get("/logout", function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.redirect("/");
+      res.render("home", {message: "You've successfully logged out. See ya'"});
     }
   });
 });
@@ -114,7 +118,7 @@ app.get("/add", function (req, res) {
     res.render("add");
   } else {
     //TODO: add message "you need to be logged to add a new amoor"
-    res.redirect("/");
+    res.render("home", {message: ""});
   }
 });
 
