@@ -1,205 +1,59 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const path = require("path");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
+const flash = require('connect-flash');
+const dotenv = require('dotenv').config();
 
 const app = express();
 
+/***************** Passport Config *****************/
+require("./config/passport")(passport);
+
+/***************** Mongoose *****************/
+mongoose.connect("mongodb://localhost:27017/amoorDB");
+
+/***************** Middleware *****************/
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.set("port", process.env.PORT || 3000);
+
 /***************** Express Session *****************/
 app.use(
   session({
-    secret: "melimeli",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
 );
 
+/************* Passport Middleware *************/
 app.use(passport.initialize());
 app.use(passport.session());
 
-/***************** Mongoose *****************/
-mongoose.connect("mongodb://localhost:27017/amoorDB");
 
-/* User Model */
-const userSchema = new mongoose.Schema({
-  username: { type: String, unique: true },
-  email: { type: String, unique: true },
-  password: String,
-  amoors: [{ type: Object }],
+/********* Connect flash + Global Vars *********/
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.info_msg = req.flash('info_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
 });
 
-userSchema.plugin(passportLocalMongoose, { usernameQueryFields: ["email"] });
-
-const User = new mongoose.model("User", userSchema);
-
-/* Passport-Local Configuration */
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-/***************** Accesible Views *****************/
-/* The following views don't need authentication:
- * Home, Sign In, Sign Up, Amoors' Wall            */
-app.get("/", function (req, res) {
-  res.redirect("/amoors");
-});
-
-app.get("/home", function (req, res) {
-  res.render("home", {message: ""});
-});
-
-app.get("/signin", function (req, res) {
-  res.render("signin", { username: "", password: "", errMsg: "" });
-});
-
-app.get("/signup", function (req, res) {
-  res.render("signup");
-});
-
-app.get("/amoors", function (req, res) {
-  User.find({ amoors: { $ne: null } }, function (err, foundUsers) {
-    if (err) {
-      console.log(err);
-    } else {
-      if (foundUsers) {
-        if (req.isAuthenticated()) {
-          res.render("amoors", { auth: "auth", usersWithAmoors: foundUsers });
-        } else {
-          res.render("amoors", {
-            auth: "non-auth",
-            usersWithAmoors: foundUsers,
-          });
-        }
-      }
-    }
-  });
-});
-
-app.get("/faq", function (req, res) {
-  res.render("faq");
-});
-
-app.get("/logout", function (req, res) {
-  req.logout((err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("home", {message: "You've successfully logged out. See ya'"});
-    }
-  });
-});
-
-/*************** Auth Required Views ***************/
-/* The following views NEED authentication:
- * Add News Amoor, Success Message, Settings       */
-app.get("/settings", function (req, res) {
-  User.findById(req.user.id, (err, foundUser) => {
-    if (err) {
-      console.log(err);
-    } else {
-      if (foundUser) {
-        if (req.isAuthenticated()) {
-          res.render("settings", {amoors: foundUser.amoors});
-        }
-      }
-    }
-  });  
-});
-
-app.get("/add", function (req, res) {
-  if (req.isAuthenticated()) {
-    res.render("add");
-  } else {
-    //TODO: add message "you need to be logged to add a new amoor"
-    res.render("home", {message: ""});
-  }
-});
-
-app.get("/success", function (req, res) {
-  if (req.isAuthenticated()) {
-    res.render("success");
-  }
-});
-
-app.post("/delete", function(req, res) {
-  if (req.isAuthenticated()) {
-    User.findById(req.user.id, function(err, foundUser){
-      foundUser.amoors.splice(req.body.index, 1);
-      foundUser.save(function(err){
-        if(!err){
-          res.redirect("/settings");
-        }
-      });
-    });
-  };
-
-  
-});
-  
-
-/*************** Add New Amoor ***************/
-app.post("/add", function (req, res) {
-  const submittedAmoor = req.body;
-
-  User.findById(req.user.id, function (err, foundUser) {
-    if (err) {
-      console.log(err);
-    } else {
-      if (foundUser) {
-        foundUser.amoors.push(submittedAmoor);
-        foundUser.save(function () {
-          res.redirect("/success");
-        });
-      }
-    }
-  });
-});
-
-/*************** Sign Up ***************/
-app.post("/signup", function (req, res) {
-  User.register(
-    { username: req.body.username, email: req.body.email },
-    req.body.password,
-    function (err, user) {
-      if (err) {
-        console.log(err);
-        return res.redirect("/signup"); //with error
-      } else {
-        passport.authenticate("local")(req, res, function () {
-          res.redirect("/amoors"); //with cookie?
-        });
-      }
-    }
-  );
-});
-
-/*************** Sign In ***************/
-app.post("/signin", function (req, res) {
-  const user = new User({
-    username: req.body.username,
-    password: req.body.password,
-  });
-
-  req.login(user, function (err) {
-    if (err) {
-      console.log(err);
-      res.redirect("/signin");
-    } else {
-      passport.authenticate("local")(req, res, function () {
-        res.redirect("/amoors");
-      });
-    }
-  });
-});
+/******************* Routes *******************/
+app.use("/", require("./routes/index"));
+app.use("/users", require("./routes/users"));
 
 /*************** Starting Server ***************/
-app.listen(3000, function () {
-  console.log("Server started on port 3000.");
+app.listen(app.get("port"), () => {
+  console.log("Server started on port ", app.get("port"));
 });

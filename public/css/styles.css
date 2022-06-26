@@ -334,10 +334,10 @@ header {
   border-color: #ed143d29;
 }
 
-.info-msg {
-  text-align: left;
-  color: var(--amoor-disable-color);
-  font-size: 1rem;
+.alert-info, .info-msg {
+  color: #43747e;
+  background-color: #e7f3f5;
+  border-color: #c4d0d1;
 }
 
 .option-msg {
