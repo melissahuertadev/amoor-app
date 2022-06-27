@@ -28,7 +28,10 @@ router.get("/settings", function (req, res) {
     } else {
       if (foundUser) {
         if (req.isAuthenticated()) {
-          res.render("settings", { name: foundUser.username, amoors: foundUser.amoors });
+          res.render("settings", {
+            name: foundUser.username,
+            amoors: foundUser.amoors,
+          });
         }
       }
     }
@@ -48,7 +51,9 @@ router.get("/logout", function (req, res) {
 
 router.get("/add", ensureAuthenticated, (req, res) => res.render("add"));
 
-router.get("/success", ensureAuthenticated, (req, res) => res.render("success"));
+router.get("/success", ensureAuthenticated, (req, res) =>
+  res.render("success")
+);
 
 /*************** Authentication ***************/
 //Sign Up
@@ -139,10 +144,13 @@ router.post(
   "/signin",
   passport.authenticate("local", {
     failureFlash: true,
-    failureRedirect: "/users/signin",
+    failureRedirect: "/signin",
   }),
   (req, res) => {
-    res.redirect("/amoors");
+    req.flash("success_msg", "Welcome");
+    const redirectUrl = req.session.returnTo || "/amoors";
+    delete req.session.returnTo;
+    res.redirect(redirectUrl);
   }
 );
 
