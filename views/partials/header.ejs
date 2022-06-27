@@ -15,27 +15,18 @@
 </head>
 
 <body>
-  <% switch(event) {
-     case "auth" : %>
-      <header class="container-fluid-sm header-auth">
-        <a href="/amoors" class="header-brand font-amoor">Amoor</a>
-        <a class="header-icon d-flex justify-content-end" href="/users/settings">
-          <i class="fa-solid fa-gear"></i>
-        </a>
-      </header>
-  <% break;
-    case "non-auth" : %>
-      <header class="container-fluid-sm header-auth">
-        <a href="/amoors" class="header-brand font-amoor">Amoor</a>
-        <a class="header-icon d-flex justify-content-end" href="/faq">
-          <i class="fa-regular fa-circle-question"></i>
-        </a>
-      </header>
-  <% break;
-    default: %>
-      <header class="container-fluid-sm">
-        <a class="header-icon d-flex justify-content-end" href="/faq">
-          <i class="fa-regular fa-circle-question"></i>
-        </a>
-      </header>
-    <% }%>
+<% if(!currentUser) {%>
+  <header class="container-fluid-sm header-auth">
+    <a href="/amoors" class="header-brand font-amoor">Amoor</a>
+    <a class="header-icon d-flex justify-content-end" href="/faq">
+      <i class="fa-regular fa-circle-question"></i>
+    </a>
+  </header>
+<% } else {%>
+  <header class="container-fluid-sm header-auth">
+    <a href="/amoors" class="header-brand font-amoor">Amoor</a>
+    <a class="header-icon d-flex justify-content-end" href="/users/settings">
+      <i class="fa-solid fa-gear"></i>
+    </a>
+  </header>
+<% } %>
