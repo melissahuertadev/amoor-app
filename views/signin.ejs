@@ -6,9 +6,8 @@
       <%- include ('partials/messages') %>
       <form id="signin-form" action="/users/signin" method="POST" autocomplete="off">
         <div class="form-group row">
-          <input id="si-email" type="text" class="form-control col-lg-5" name="username" placeholder="Username or E-mail" value="<%= username %>" autocomplete="off">
-          <input id="si-password" type="password" class="form-control col-lg-5" name="password" placeholder="Password" value="<%= password %>" autocomplete="off">
-          <span class="col-lg-10"> <%= errMsg %> </span>
+          <input id="si-email" type="text" class="form-control col-lg-5" name="username" placeholder="Username or E-mail" value="<%= typeof username != 'undefined' ? username : '' %>" autocomplete="off">
+          <input id="si-password" type="password" class="form-control col-lg-5" name="password" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>" autocomplete="off">
         </div>
         <button type="submit" class="btn btn-dark">Sign in</button>
       </form>

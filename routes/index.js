@@ -1,15 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const session = require("express-session");
+/* const session = require("express-session");
 const passport = require("passport");
-const passportLocalMongoose = require("passport-local-mongoose");
+const passportLocalMongoose = require("passport-local-mongoose"); */
 
 const User = require("../models/User");
-
-/* Passport-Local Configuration */
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 /***************** Accesible Views *****************/
 /* The following views don't need authentication:
@@ -19,7 +14,11 @@ router.get("/", (req, res) => {
 });
 
 router.get("/home", function (req, res) {
-  res.render("home", { message: "" });
+  if (req.isAuthenticated()) {
+    res.render("home", { auth: "auth" });
+  } else {
+    res.render("home", { auth: "non-auth" });
+  }
 });
 
 router.get("/amoors", function (req, res) {

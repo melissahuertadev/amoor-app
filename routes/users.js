@@ -8,15 +8,60 @@ const User = require("../models/User");
 /***************** Accesible Views *****************/
 /* The following views don't need authentication:
  * Sign In, Sign Up            */
-router.get("/signin", (req, res) => {
-  res.render("signin", { username: "", password: "", errMsg: "" });
-});
-
 router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
-/*************** Sign Up ***************/
+router.get("/signin", (req, res) => {
+  res.render("signin");
+});
+
+/*************** Auth Required Views ***************/
+/* The following views NEED authentication:
+ * Add News Amoor, Success Message, Settings, Logout */
+
+router.get("/settings", function (req, res) {
+  User.findById(req.user.id, (err, foundUser) => {
+    if (err) {
+      console.log(err);
+    } else {
+      if (foundUser) {
+        if (req.isAuthenticated()) {
+          res.render("settings", { amoors: foundUser.amoors });
+        }
+      }
+    }
+  });
+});
+
+router.get("/logout", function (req, res) {
+  req.logout((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      req.flash("info_msg", "You've successfully logged out. See ya'");
+      res.redirect("/home");
+    }
+  });
+});
+
+router.get("/add", function (req, res) {
+  if (req.isAuthenticated()) {
+    res.render("add");
+  } else {
+    req.flash("info_msg", "Oops! You need to be logged to add a new amoor");
+    res.redirect("/home");
+  }
+});
+
+router.get("/success", function (req, res) {
+  if (req.isAuthenticated()) {
+    res.render("success");
+  }
+});
+
+/*************** Authentication ***************/
+//Sign Up
 router.post("/signup", function (req, res) {
   const { username, email, password, passwordConfirmation } = req.body;
   let errors = [];
@@ -80,10 +125,13 @@ router.post("/signup", function (req, res) {
               req.body.password,
               function (err, user) {
                 if (err) {
-                  console.log(err);
                   return res.redirect("/users/signup");
                 } else {
                   passport.authenticate("local")(req, res, function () {
+                    req.flash(
+                      "success_msg",
+                      "You are now registered and logged in, you can add a new amoor."
+                    );
                     res.redirect("/amoors");
                   });
                 }
@@ -96,33 +144,56 @@ router.post("/signup", function (req, res) {
   }
 });
 
-/*************** Auth Required Views ***************/
-/* The following views NEED authentication:
- * Add News Amoor, Success Message, Settings       */
-router.get("/settings", function (req, res) {
-    User.findById(req.user.id, (err, foundUser) => {
-      if (err) {
-        console.log(err);
-      } else {
-        if (foundUser) {
-          if (req.isAuthenticated()) {
-            res.render("settings", {amoors: foundUser.amoors});
-          }
-        }
-      }
-    });  
-  });
+//Sign In
+router.post(
+  "/signin",
+  passport.authenticate("local", {
+    failureFlash: true,
+    failureRedirect: "/users/signin",
+  }),
+  (req, res) => {
+    res.redirect("/amoors");
+  }
+);
 
-router.get("/logout", function (req, res) {
-  req.logout((err) => {
+/*********** Create and Delete Amoor ***********/
+//Add
+router.post("/add", function (req, res) {
+  const submittedAmoor = req.body;
+
+  function titleCase(string) {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  }
+
+  submittedAmoor.name1 = titleCase(submittedAmoor.name1);
+  submittedAmoor.name2 = titleCase(submittedAmoor.name2);
+
+  User.findById(req.user.id, function (err, foundUser) {
     if (err) {
       console.log(err);
     } else {
-      res.render("home", {
-        message: "You've successfully logged out. See ya'",
-      });
+      if (foundUser) {
+        foundUser.amoors.push(submittedAmoor);
+        foundUser.save(function () {
+          res.redirect("/users/success");
+        });
+      }
     }
   });
+});
+
+//Delete
+router.post("/delete", function (req, res) {
+  if (req.isAuthenticated()) {
+    User.findById(req.user.id, function (err, foundUser) {
+      foundUser.amoors.splice(req.body.index, 1);
+      foundUser.save(function (err) {
+        if (!err) {
+          res.redirect("/users/settings");
+        }
+      });
+    });
+  }
 });
 
 module.exports = router;
