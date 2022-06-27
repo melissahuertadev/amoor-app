@@ -28,6 +28,10 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+body {
+  margin-bottom: 60px;
+}
+
 header {
   min-height: 60px;
   text-align: right;
@@ -73,6 +77,7 @@ section {
 .container-fluid {
   padding: 7% 9%;
   font-size: 0.95rem;
+  text-align: -webkit-center;
 }
 
 .container-fluid-sm {
@@ -118,6 +123,9 @@ header {
   justify-content: space-between;
 }
 
+.header-icon {
+  font-size: 1.3rem;
+}
 
 /******** Footer ********/
 .footer-creator a:hover {
@@ -128,6 +136,7 @@ header {
 /******** Home ********/
 .home-container {
   padding: 0;
+  text-align: -webkit-center;
 }
 
 .home-heading {
@@ -324,6 +333,10 @@ header {
   position: absolute;
   bottom: 100px;
   right: 50px;
+}
+
+.signin-section, .signup-section {
+  text-align: -webkit-center;
 }
 
 /** Messages **/
