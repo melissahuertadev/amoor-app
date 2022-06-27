@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
+const { ensureAuthenticated } = require("../config/auth");
 
 const User = require("../models/User");
 
@@ -27,7 +28,7 @@ router.get("/settings", function (req, res) {
     } else {
       if (foundUser) {
         if (req.isAuthenticated()) {
-          res.render("settings", { amoors: foundUser.amoors });
+          res.render("settings", { name: foundUser.username, amoors: foundUser.amoors });
         }
       }
     }
@@ -45,20 +46,9 @@ router.get("/logout", function (req, res) {
   });
 });
 
-router.get("/add", function (req, res) {
-  if (req.isAuthenticated()) {
-    res.render("add");
-  } else {
-    req.flash("info_msg", "Oops! You need to be logged to add a new amoor");
-    res.redirect("/home");
-  }
-});
+router.get("/add", ensureAuthenticated, (req, res) => res.render("add"));
 
-router.get("/success", function (req, res) {
-  if (req.isAuthenticated()) {
-    res.render("success");
-  }
-});
+router.get("/success", ensureAuthenticated, (req, res) => res.render("success"));
 
 /*************** Authentication ***************/
 //Sign Up
