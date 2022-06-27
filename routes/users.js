@@ -13,7 +13,7 @@ router.get("/signup", (req, res) => {
 });
 
 router.get("/signin", (req, res) => {
-  res.render("signin", { username: "", password: ""});
+  res.render("signin");
 });
 
 /*************** Auth Required Views ***************/
@@ -128,7 +128,10 @@ router.post("/signup", function (req, res) {
                   return res.redirect("/users/signup");
                 } else {
                   passport.authenticate("local")(req, res, function () {
-                    req.flash("success_msg", "You are now registered and logged in, you can add a new amoor.");
+                    req.flash(
+                      "success_msg",
+                      "You are now registered and logged in, you can add a new amoor."
+                    );
                     res.redirect("/amoors");
                   });
                 }
@@ -142,33 +145,28 @@ router.post("/signup", function (req, res) {
 });
 
 //Sign In
-router.post("/signin", function (req, res) {
-  const user = new User({
-    username: req.body.username,
-    password: req.body.password,
-  });
+router.post(
+  "/signin",
+  passport.authenticate("local", {
+    failureFlash: true,
+    failureRedirect: "/users/signin",
+  }),
+  (req, res) => {
+    res.redirect("/amoors");
+  }
+);
 
-  req.login(user, function (err) {
-    if (err) {
-      res.redirect("/users/signin");
-    } else {
-      passport.authenticate("local")(req, res, function () {
-        res.redirect("/amoors");
-      });
-    }
-  });
-});
-
-/*************** Add New Amoor ***************/
+/*********** Create and Delete Amoor ***********/
+//Add
 router.post("/add", function (req, res) {
   const submittedAmoor = req.body;
 
-  function titleCase(string){
+  function titleCase(string) {
     return string[0].toUpperCase() + string.slice(1).toLowerCase();
   }
 
-  submittedAmoor.name1 = titleCase(submittedAmoor.name1);  
-  submittedAmoor.name2 = titleCase(submittedAmoor.name2);  
+  submittedAmoor.name1 = titleCase(submittedAmoor.name1);
+  submittedAmoor.name2 = titleCase(submittedAmoor.name2);
 
   User.findById(req.user.id, function (err, foundUser) {
     if (err) {
@@ -184,18 +182,18 @@ router.post("/add", function (req, res) {
   });
 });
 
-/*************** Delete an Amoor ***************/
-router.post("/delete", function(req, res) {
+//Delete
+router.post("/delete", function (req, res) {
   if (req.isAuthenticated()) {
-    User.findById(req.user.id, function(err, foundUser){
+    User.findById(req.user.id, function (err, foundUser) {
       foundUser.amoors.splice(req.body.index, 1);
-      foundUser.save(function(err){
-        if(!err){
+      foundUser.save(function (err) {
+        if (!err) {
           res.redirect("/users/settings");
         }
       });
     });
-  };
+  }
 });
 
 module.exports = router;
