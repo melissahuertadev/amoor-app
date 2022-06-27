@@ -14,7 +14,11 @@ router.get("/", (req, res) => {
 });
 
 router.get("/home", function (req, res) {
-  res.render("home");
+  if (req.isAuthenticated()) {
+    res.render("home", { auth: "auth" });
+  } else {
+    res.render("home", { auth: "non-auth" });
+  }
 });
 
 router.get("/amoors", function (req, res) {
