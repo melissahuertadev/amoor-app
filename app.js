@@ -1,11 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
-const path = require("path");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
-const passportLocalMongoose = require("passport-local-mongoose");
+/* const passportLocalMongoose = require("passport-local-mongoose"); */
+
+const path = require("path");
 const flash = require('connect-flash');
 const dotenv = require('dotenv').config();
 
@@ -18,9 +19,12 @@ require("./config/passport")(passport);
 mongoose.connect("mongodb://localhost:27017/amoorDB");
 
 /***************** Middleware *****************/
-app.use(express.static("public"));
+
 app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.set("port", process.env.PORT || 3000);
 
@@ -29,7 +33,12 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
+    cookie: {
+      httpOnly: true,
+      expires: Date.now() + 1000 * 60 * 60 *24 * 7,
+      maxAge: 1000 * 60 * 60 *24 * 7,
+    }
   })
 );
 
