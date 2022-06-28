@@ -9,6 +9,8 @@ const path = require("path");
 const flash = require('connect-flash');
 const dotenv = require('dotenv').config();
 
+const mongoSanitize = require("express-mongo-sanitize");
+
 const app = express();
 
 /***************** Passport Config *****************/
@@ -24,22 +26,25 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(mongoSanitize({ replaceWith: '_'}));
 
 app.set("port", process.env.PORT || 3000);
 
 /***************** Express Session *****************/
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      httpOnly: true,
-      expires: Date.now() + 1000 * 60 * 60 *24 * 7,
-      maxAge: 1000 * 60 * 60 *24 * 7,
-    }
-  })
-);
+const sessionConfig = {
+  name: 'amoorssessionid',
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    //secure: true,
+    expires: Date.now() + 1000 * 60 * 60 *24 * 7,
+    maxAge: 1000 * 60 * 60 *24 * 7,
+  }
+}
+
+app.use(session(sessionConfig));
 
 /************* Passport Middleware *************/
 app.use(passport.initialize());
