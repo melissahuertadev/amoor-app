@@ -18,7 +18,18 @@ const app = express();
 require("./config/passport")(passport);
 
 /***************** Mongoose *****************/
-mongoose.connect("mongodb://localhost:27017/amoorDB");
+const dbUrl = process.env.DB_URL;
+
+mongoose.connect(dbUrl, {
+  useNewUrlParser: true,
+});
+
+/**, {
+  
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+} */
 
 /***************** Middleware *****************/
 app.set("view engine", "ejs");
@@ -65,9 +76,9 @@ app.use((req, res, next) => {
 app.use("/", require("./routes/index"));
 app.use("/users", require("./routes/users"));
 
-app.use((req, res) => {
+/* app.use((req, res) => {
   res.status(404).render("404");
-});
+}); */
 
 /*************** Starting Server ***************/
 app.listen(app.get("port"), () => {
