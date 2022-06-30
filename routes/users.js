@@ -144,7 +144,7 @@ router.post(
   "/signin",
   passport.authenticate("local", {
     failureFlash: true,
-    failureRedirect: "/signin",
+    failureRedirect: "/users/signin",
   }),
   (req, res) => {
     req.flash("success_msg", "Welcome");

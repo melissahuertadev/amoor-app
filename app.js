@@ -1,8 +1,13 @@
+if (process.env.NODE_ENV !== "production"){
+  require("dotenv").config();
+}
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const passport = require("passport");
 
 const path = require("path");
@@ -10,7 +15,6 @@ const flash = require("connect-flash");
 const dotenv = require("dotenv").config();
 
 const mongoSanitize = require("express-mongo-sanitize");
-const helmet = require("helmet");
 
 const app = express();
 
@@ -18,18 +22,12 @@ const app = express();
 require("./config/passport")(passport);
 
 /***************** Mongoose *****************/
-const dbUrl = process.env.DB_URL;
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/amoorDB";
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
+  useUnifiedTopology: true
 });
-
-/**, {
-  
-  useCreateIndex: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false
-} */
 
 /***************** Middleware *****************/
 app.set("view engine", "ejs");
@@ -41,10 +39,25 @@ app.use(mongoSanitize({ replaceWith: "_" }));
 
 app.set("port", process.env.PORT || 3000);
 
-/***************** Express Session *****************/
+const secret = process.env.SESSION_SECRET || "4F257d.u:*>MTZC";
+
+/***************** Connect Mongo *****************/
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+    secret: secret
+  }
+});
+
+store.on("error", function(e){
+  console.log("SESSION STORE ERROR");
+});
+
 const sessionConfig = {
+  store,
   name: "amoorssessionid",
-  secret: process.env.SESSION_SECRET,
+  secret: secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -76,9 +89,9 @@ app.use((req, res, next) => {
 app.use("/", require("./routes/index"));
 app.use("/users", require("./routes/users"));
 
-/* app.use((req, res) => {
+app.use((req, res) => {
   res.status(404).render("404");
-}); */
+});
 
 /*************** Starting Server ***************/
 app.listen(app.get("port"), () => {
