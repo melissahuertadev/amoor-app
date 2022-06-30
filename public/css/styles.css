@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&family=Yusei+Magic&display=swap');
-
 /*** Global Style ***/
 :root {
   --amoor-main-color: #393939;
   --amoor-light-color: #EEEEEE;
   --amoor-pink-color: #FAC5DE;
   --amoor-white-color: #F5F5F5;
+  --amoor-disable-color: #6d6d6d;
 }
 
 * {
@@ -25,6 +24,10 @@ body {
   text-align: center;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin-bottom: 60px;
 }
 
 header {
@@ -72,6 +75,7 @@ section {
 .container-fluid {
   padding: 7% 9%;
   font-size: 0.95rem;
+  text-align: -webkit-center;
 }
 
 .container-fluid-sm {
@@ -117,6 +121,9 @@ header {
   justify-content: space-between;
 }
 
+.header-icon {
+  font-size: 1.3rem;
+}
 
 /******** Footer ********/
 .footer-creator a:hover {
@@ -127,6 +134,7 @@ header {
 /******** Home ********/
 .home-container {
   padding: 0;
+  text-align: -webkit-center;
 }
 
 .home-heading {
@@ -245,6 +253,12 @@ header {
 }
 
 /******** Settings, FAQ ********/
+.greeting-name {
+  text-align: right;
+  margin-right: 20px;
+    font-size: 1.5rem;
+}
+
 .settings-subtitle {
   margin-bottom: 35px;
 }
@@ -273,6 +287,14 @@ header {
   font-weight: 100;
   border-radius: 6px;
   padding: 0 17px;
+}
+
+.your-amoors-msg {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 24px;
+  margin-left: 15px;
+  color: var(--amoor-disable-color);
 }
 
 /* FAQ */
@@ -309,4 +331,37 @@ header {
   position: absolute;
   bottom: 100px;
   right: 50px;
+}
+
+.signin-section, .signup-section {
+  text-align: -webkit-center;
+}
+
+/** Messages **/
+.succeed-msg {
+  color: darkslateblue;
+  font-size: 1rem;
+}
+
+.alert-danger {
+  text-align: left;
+  color: crimson;
+  font-size: 1rem;
+  background-color: #e8e2e2;
+  border-color: #ed143d29;
+}
+
+.alert-info, .info-msg {
+  color: #43747e;
+  background-color: #e7f3f5;
+  border-color: #c4d0d1;
+}
+
+.option-msg {
+  margin-top: 18px;
+}
+
+/* 404 */
+.notfound-heading {
+  font-size: 7rem;
 }

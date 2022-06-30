@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  
   <title>Amoor App</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
@@ -21,15 +22,13 @@
 
 <body>
   <% if(!currentUser) {%>
-    <header class="container-fluid-sm header-auth">
-      <a href="/amoors" class="header-brand font-amoor mr-auto">Amoor</a>
+    <header class="container-fluid-sm header-auth ml-auto">
       <a class="header-icon d-flex justify-content-end" href="/faq">
         <i class="fa-regular fa-circle-question"></i>
       </a>
     </header>
-    <% } else {%>
-      <header class="container-fluid-sm header-auth">
-        <a href="/amoors" class="header-brand font-amoor mr-auto">Amoor</a>
+    <% } else { %>
+      <header class="container-fluid-sm header-auth ml-auto">
         <a class="header-icon d-flex justify-content-end" href="/users/settings">
           <i class="fa-solid fa-gear"></i>
         </a>

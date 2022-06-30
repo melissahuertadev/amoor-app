@@ -1,6 +1,6 @@
 <%- include('partials/header', {event: "auth" })%>
-
     <section class="settings-section text-left container-fluid">
+        <h5 class="greeting-name">Hi, <strong><%= name %></strong></h5>
         <div id="settings-accordion">
             <!-- Your amoors toggle -->
             <h5 class="settings-subtitle">
@@ -10,20 +10,24 @@
                 </button>
             </h5>
             <div id="your-amoors" class="collapse" data-parent="#settings-accordion">
+                <%if (amoors.length <= 0){%>
+                <h5 class="your-amoors-msg">You haven't shared any amoor yet :(</h5>
+
                 <!-- All the amoors created by an user -->
-                <div class="amoor-item">
-                    <p>Garfield & Arlene</p>
-                    <button class="btn-dark btn-delete"> Delete </button>
-                </div>
-                <div class="amoor-item">
-                    <p>Garfield & Jhon</p>
-                    <button class="btn-dark btn-delete"> Delete </button>
-                </div>
+                <%} else { %>
+                <% amoors.forEach((amoor, index) => { %>
+                    <form action="/users/delete" method="POST">
+                        <div class="amoor-item" >
+                            <p><%= amoor.name1 %> & <%= amoor.name2 %></p>
+                            <button name="index" value="<%= index %>" type="submit" class="btn-dark btn-delete"> Delete </button>
+                        </div>
+                    </form>
+                <% }); %>
+                <% } %>
             </div>
             <%- include('partials/faq') %>
-
             <div class="settings-logout">
-                <a class="btn btn-dark" href="/logout" role="button">Log out</a>
+                <a class="btn btn-dark" href="/users/logout" role="button">Log out</a>
             </div>
         </div>
     </section>

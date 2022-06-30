@@ -7,11 +7,6 @@
         padding: 2% 10%;
     }
 
-    /* Header */
-    .header-icon {
-        font-size: 1.5rem;
-    }
-
     /* Footer */
     .footer-creator {
         font-size: 1.25rem;
@@ -46,6 +41,12 @@
 
     .home-btns .btn:first-child {
         margin-right: 20px;
+    }
+
+    .your-amoors-msg {
+        font-size: 1.425rem;
+        line-height: 1.7rem;
+        padding: 8px 25px;
     }
 
     .faq-subtitle .collapsed:after {
@@ -140,8 +141,8 @@
     .form-control {
         display: inherit;
         margin-top: 0;
-        height: 70px;
-        font-size: 1.5rem;
+        height: 50px;
+        font-size: 1.12rem;
     }
 
     .form-control:nth-child(odd) {
@@ -162,6 +163,12 @@
         padding-top: 20px;
     }
 
+    .your-amoors-msg {
+        font-size: 1.75rem;
+        line-height: 2rem;
+        padding: 10px 29px;
+    }
+
     /* Success Msg */
     .success-heading {
         font-size: 60px;
@@ -175,6 +182,10 @@
 
     .btn-delete {
         font-size: 1.6rem;
+    }
+    
+    .footer-creator {
+        font-size: 0.95rem;
     }
 }
 
