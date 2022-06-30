@@ -10,7 +10,6 @@ const flash = require("connect-flash");
 const dotenv = require("dotenv").config();
 
 const mongoSanitize = require("express-mongo-sanitize");
-const helmet = require("helmet");
 
 const app = express();
 
@@ -22,14 +21,8 @@ const dbUrl = process.env.DB_URL;
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
+  useUnifiedTopology: true
 });
-
-/**, {
-  
-  useCreateIndex: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false
-} */
 
 /***************** Middleware *****************/
 app.set("view engine", "ejs");
@@ -76,9 +69,9 @@ app.use((req, res, next) => {
 app.use("/", require("./routes/index"));
 app.use("/users", require("./routes/users"));
 
-/* app.use((req, res) => {
+app.use((req, res) => {
   res.status(404).render("404");
-}); */
+});
 
 /*************** Starting Server ***************/
 app.listen(app.get("port"), () => {
