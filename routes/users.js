@@ -3,6 +3,8 @@ const router = express.Router();
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const { ensureAuthenticated } = require("../config/auth");
+const { titleCase, onlyLetters } = require("../js/utils");
+const { validateUser, validateAmoor } = require("../js/validation");
 
 const User = require("../models/User");
 
@@ -58,61 +60,36 @@ router.get("/success", ensureAuthenticated, (req, res) =>
 /*************** Authentication ***************/
 //Sign Up
 router.post("/signup", function (req, res) {
-  const { username, email, password, passwordConfirmation } = req.body;
+ // const { username, email, password, passwordConfirmation } = req.body;
+
+  const submittedUser = req.body;
   let errors = [];
 
-  //Check required fields
-  if (!username || !email || !password || !passwordConfirmation) {
-    errors.push({ msg: "Please fill all fields." });
-  }
-
-  //Check passwords matching
-  if (password !== passwordConfirmation) {
-    errors.push({ msg: "Passwords do not match." });
-  }
-
-  //Check username length
-  if (username.length < 3) {
-    errors.push({ msg: "Username must contain 3 or more characters" });
-  }
-
-  //Check pass length
-  if (password.length < 5) {
-    errors.push({ msg: "Password must contain 5 or more characters" });
-  }
+  errors = validateUser(submittedUser);
 
   if (errors.length > 0) {
     res.render("signup", {
       errors,
-      username,
-      email,
-      password,
-      passwordConfirmation,
+      ...submittedUser,
     });
   } else {
     // Validation passed
-    User.findOne({ email: email }).then((user) => {
+    User.findOne({ email: submittedUser.email }).then((user) => {
       if (user) {
         //E-mail exists
         errors.push({ msg: "E-mail is already registered" });
         res.render("signup", {
           errors,
-          username,
-          email,
-          password,
-          passwordConfirmation,
+          ...submittedUser,
         });
       } else {
-        User.findOne({ username: username }).then((user) => {
+        User.findOne({ username: submittedUser.username }).then((user) => {
           if (user) {
             //Username exists
             errors.push({ msg: "Username is already registered" });
             res.render("signup", {
               errors,
-              username,
-              email,
-              password,
-              passwordConfirmation,
+              ...submittedUser,
             });
           } else {
             User.register(
@@ -155,29 +132,44 @@ router.post(
 );
 
 /*********** Create and Delete Amoor ***********/
+/* Add a New Amoor after passing validations:
+ * - first and second field should not be empty,
+ * contain at least 2 characters, contain only
+ * letters
+ * - date can not be greater than current date
+ * - message should not be empty and contain at
+ * least one character.
+ */
 //Add
 router.post("/add", function (req, res) {
   const submittedAmoor = req.body;
+  let errors = [];
 
-  function titleCase(string) {
-    return string[0].toUpperCase() + string.slice(1).toLowerCase();
-  }
+  errors = validateAmoor(submittedAmoor);
 
-  submittedAmoor.name1 = titleCase(submittedAmoor.name1);
-  submittedAmoor.name2 = titleCase(submittedAmoor.name2);
+  if (errors.length > 0) {
+    res.render("add", {
+      errors,
+      ...submittedAmoor,
+    });
+  } else {
+    // Validation passed
+    submittedAmoor.name1 = titleCase(submittedAmoor.name1);
+    submittedAmoor.name2 = titleCase(submittedAmoor.name2);
 
-  User.findById(req.user.id, function (err, foundUser) {
-    if (err) {
-      console.log(err);
-    } else {
-      if (foundUser) {
-        foundUser.amoors.push(submittedAmoor);
-        foundUser.save(function () {
-          res.redirect("/users/success");
-        });
+    User.findById(req.user.id, function (err, foundUser) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (foundUser) {
+          foundUser.amoors.push(submittedAmoor);
+          foundUser.save(function () {
+            res.redirect("/users/success");
+          });
+        }
       }
-    }
-  });
+    });
+  }
 });
 
 //Delete
