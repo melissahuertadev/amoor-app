@@ -4,6 +4,7 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const { ensureAuthenticated } = require("../config/auth");
 const { titleCase, onlyLetters } = require("../js/utils");
+const { validateUser, validateAmoor } = require("../js/validation");
 
 const User = require("../models/User");
 
@@ -59,61 +60,36 @@ router.get("/success", ensureAuthenticated, (req, res) =>
 /*************** Authentication ***************/
 //Sign Up
 router.post("/signup", function (req, res) {
-  const { username, email, password, passwordConfirmation } = req.body;
+ // const { username, email, password, passwordConfirmation } = req.body;
+
+  const submittedUser = req.body;
   let errors = [];
 
-  //Check required fields
-  if (!username || !email || !password || !passwordConfirmation) {
-    errors.push({ msg: "Please fill all fields." });
-  }
-
-  //Check passwords matching
-  if (password !== passwordConfirmation) {
-    errors.push({ msg: "Passwords do not match." });
-  }
-
-  //Check username length
-  if (username.length < 3) {
-    errors.push({ msg: "Username must contain 3 or more characters" });
-  }
-
-  //Check pass length
-  if (password.length < 5) {
-    errors.push({ msg: "Password must contain 5 or more characters" });
-  }
+  errors = validateUser(submittedUser);
 
   if (errors.length > 0) {
     res.render("signup", {
       errors,
-      username,
-      email,
-      password,
-      passwordConfirmation,
+      ...submittedUser,
     });
   } else {
     // Validation passed
-    User.findOne({ email: email }).then((user) => {
+    User.findOne({ email: submittedUser.email }).then((user) => {
       if (user) {
         //E-mail exists
         errors.push({ msg: "E-mail is already registered" });
         res.render("signup", {
           errors,
-          username,
-          email,
-          password,
-          passwordConfirmation,
+          ...submittedUser,
         });
       } else {
-        User.findOne({ username: username }).then((user) => {
+        User.findOne({ username: submittedUser.username }).then((user) => {
           if (user) {
             //Username exists
             errors.push({ msg: "Username is already registered" });
             res.render("signup", {
               errors,
-              username,
-              email,
-              password,
-              passwordConfirmation,
+              ...submittedUser,
             });
           } else {
             User.register(
@@ -168,25 +144,8 @@ router.post(
 router.post("/add", function (req, res) {
   const submittedAmoor = req.body;
   let errors = [];
-  var today = new Date();
-  today.setHours(0, 0, 0, 0);
 
-  if (!submittedAmoor.name1 || !submittedAmoor.name2 || !submittedAmoor.date || !submittedAmoor.message) {
-    errors.push({ msg: "Please fill all fields." });
-  }
-
-  if (submittedAmoor.name1.length < 3 || submittedAmoor.name2.length < 3) {
-    errors.push({ msg: "Names should contain more than 2 characters." });
-  }
-
-  if (!onlyLetters(submittedAmoor.name1) || !onlyLetters(submittedAmoor.name2)) {
-    errors.push({ msg: "Names should contain only letters." });
-  }
-
-  if (submittedAmoor.date > today.toISOString().slice(0, 10)) {
-    errors.push({ msg: "Insert a valid celebration date." });
-  }
-  
+  errors = validateAmoor(submittedAmoor);
 
   if (errors.length > 0) {
     res.render("add", {
