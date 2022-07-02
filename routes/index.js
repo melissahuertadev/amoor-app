@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+const { isCelebrationDay } = require("../js/utils");
 const User = require("../models/User");
 
 /***************** Accesible Views *****************/
@@ -25,11 +26,11 @@ router.get("/amoors", function (req, res) {
     } else {
       if (foundUsers) {
         if (req.isAuthenticated()) {
-          res.render("amoors", { auth: "auth", usersWithAmoors: foundUsers });
+          res.render("amoors", { auth: "auth", usersWithAmoors: foundUsers, isCelebrationDay: isCelebrationDay });
         } else {
           res.render("amoors", {
             auth: "non-auth",
-            usersWithAmoors: foundUsers,
+            usersWithAmoors: foundUsers, isCelebrationDay: isCelebrationDay
           });
         }
       }
