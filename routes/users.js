@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const { ensureAuthenticated } = require("../config/auth");
+const { titleCase, onlyLetters } = require("../js/utils");
 
 const User = require("../models/User");
 
@@ -155,29 +156,61 @@ router.post(
 );
 
 /*********** Create and Delete Amoor ***********/
+/* Add a New Amoor after passing validations:
+ * - first and second field should not be empty,
+ * contain at least 2 characters, contain only
+ * letters
+ * - date can not be greater than current date
+ * - message should not be empty and contain at
+ * least one character.
+ */
 //Add
 router.post("/add", function (req, res) {
   const submittedAmoor = req.body;
+  let errors = [];
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  function titleCase(string) {
-    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  if (!submittedAmoor.name1 || !submittedAmoor.name2 || !submittedAmoor.date || !submittedAmoor.message) {
+    errors.push({ msg: "Please fill all fields." });
   }
 
-  submittedAmoor.name1 = titleCase(submittedAmoor.name1);
-  submittedAmoor.name2 = titleCase(submittedAmoor.name2);
+  if (submittedAmoor.name1.length < 3 || submittedAmoor.name2.length < 3) {
+    errors.push({ msg: "Names should contain more than 2 characters." });
+  }
 
-  User.findById(req.user.id, function (err, foundUser) {
-    if (err) {
-      console.log(err);
-    } else {
-      if (foundUser) {
-        foundUser.amoors.push(submittedAmoor);
-        foundUser.save(function () {
-          res.redirect("/users/success");
-        });
+  if (!onlyLetters(submittedAmoor.name1) || !onlyLetters(submittedAmoor.name2)) {
+    errors.push({ msg: "Names should contain only letters." });
+  }
+
+  if (submittedAmoor.date > today.toISOString().slice(0, 10)) {
+    errors.push({ msg: "Insert a valid celebration date." });
+  }
+  
+
+  if (errors.length > 0) {
+    res.render("add", {
+      errors,
+      ...submittedAmoor,
+    });
+  } else {
+    // Validation passed
+    submittedAmoor.name1 = titleCase(submittedAmoor.name1);
+    submittedAmoor.name2 = titleCase(submittedAmoor.name2);
+
+    User.findById(req.user.id, function (err, foundUser) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (foundUser) {
+          foundUser.amoors.push(submittedAmoor);
+          foundUser.save(function () {
+            res.redirect("/users/success");
+          });
+        }
       }
-    }
-  });
+    });
+  }
 });
 
 //Delete
