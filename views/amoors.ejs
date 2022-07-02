@@ -12,8 +12,12 @@
 
   <div class="row amoors-row">
     <% usersWithAmoors.forEach((user) => { %>
-      <% user.amoors.forEach(function(amoor){ %>
-        <div class="amoor-card col-lg-3 col-md-6 col-sm-10">
+      <% user.amoors.forEach(function(amoor){
+        if (isCelebrationDay(amoor.date)){ %>
+          <div class="amoor-card celebrated col-lg-3 col-md-6 col-sm-10">
+        <% } else { %>
+          <div class="amoor-card col-lg-3 col-md-6 col-sm-10">
+        <% } %>
           <div class="amoor-initials d-flex">
             <div class="initial"><%= amoor.name1.charAt(0).toUpperCase(); %></div>
             <div class="initial"><%= amoor.name2.charAt(0).toUpperCase(); %></div>
@@ -22,6 +26,9 @@
             <h4 class="amoor-names"><%= amoor.name1 %> & <%= amoor.name2 %></h4>
             <p class="amoor-date"><%= amoor.date %></p>
             <p class="amoor-phrase">"<%= amoor.message %>"</p>
+          </div>
+          <div class="amoor-heart">
+            <i class="fa-solid fa-heart"></i>
           </div>
         </div>
       <% }); %>
