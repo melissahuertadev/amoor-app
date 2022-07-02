@@ -3,6 +3,7 @@
   --amoor-main-color: #393939;
   --amoor-light-color: #EEEEEE;
   --amoor-pink-color: #FAC5DE;
+  --amoor-celebrated-color: #C07B9B;
   --amoor-white-color: #F5F5F5;
   --amoor-disable-color: #6d6d6d;
 }
@@ -231,6 +232,37 @@ header {
   line-height: 25px;
 }
 
+.amoor-heart {
+  margin-top: -12px;
+  margin-right: 15px;
+  text-align: end;
+}
+
+.amoor-heart i {
+  margin-top: -12px;
+  color: var(--amoor-main-color);
+  background: var(--amoor-light-color);
+  padding: 3px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+}
+
+.celebrated .initial, .celebrated .amoor-info {
+  border: 3px solid var(--amoor-celebrated-color);
+  color: var(--amoor-celebrated-color);
+}
+
+.celebrated .amoor-initials::after {
+  content: "Today is their celebration date!";
+  color: var(--amoor-celebrated-color);
+  font-size: 0.75rem;
+  margin: auto;
+  margin-left: 4px;
+}
+
+.celebrated .amoor-heart i {
+  color: var(--amoor-celebrated-color);
+}
 
 /******** Success Message ********/
 .success-section {
