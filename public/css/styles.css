@@ -103,6 +103,13 @@ section {
 .btn-dark {
   background: var(--amoor-main-color);
   color: var(--amoor-light-color);
+  border: 1px solid var(--amoor-main-color);
+}
+
+.btn-outline {
+  color: var(--amoor-main-color);
+  background-color: var(--amoor-light-color);
+  border: 1px solid var(--amoor-main-color);
 }
 
 .btn-pink {
@@ -202,6 +209,7 @@ header {
 
 .amoor-card {
   margin: 30px 0;
+  min-width: 290px;
 }
 
 .initial {
@@ -312,13 +320,17 @@ header {
   font-size: 1.25rem;
 }
 
-.btn-delete {
+.btn-crud {
   text-align: center;
   justify-content: center;
   font-size: 1rem;
-  font-weight: 100;
+  font-weight: 200;
   border-radius: 6px;
-  padding: 0 17px;
+  padding: 0 13px;
+}
+
+.btn-crud:nth-child(odd) {
+  margin-right: 5px;
 }
 
 .your-amoors-msg {
