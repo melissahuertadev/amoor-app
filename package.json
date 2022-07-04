@@ -29,6 +29,7 @@
     "express-mongo-sanitize": "^2.2.0",
     "express-session": "^1.17.3",
     "helmet": "^5.1.0",
+    "method-override": "^3.0.0",
     "mongoose": "^6.4.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
