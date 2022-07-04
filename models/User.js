@@ -3,8 +3,6 @@ const { Schema } = mongoose;
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 
-/* const Amoor = require("./Amoor"); */
-
 /* User Model */
 const UserSchema = new Schema({
   username: { type: String, required: true, unique: true },
