@@ -7,6 +7,7 @@ const { titleCase, onlyLetters } = require("../js/utils");
 const { validateUser, validateAmoor } = require("../js/validation");
 
 const User = require("../models/User");
+const Amoor = require("../models/Amoor");
 
 /***************** Accesible Views *****************/
 /* The following views don't need authentication:
@@ -23,24 +24,21 @@ router.get("/signin", (req, res) => {
 /* The following views NEED authentication:
  * Add News Amoor, Success Message, Settings, Logout */
 
-router.get("/settings", function (req, res) {
-  User.findById(req.user.id, (err, foundUser) => {
-    if (err) {
-      console.log(err);
+router.get("/settings", async function (req, res) {
+  try {
+    const user = await User.findById(req.user.id).populate('amoors');
+
+    if(!user){
+      return res.status(400);
     } else {
-      if (foundUser) {
-        if (req.isAuthenticated()) {
-          /* console.log(foundUser);
-          console.log(foundUser.amoors); */
-          res.render("settings", {
-            name: foundUser.username,
-            amoors: foundUser.amoors,
-          });
-        }
-      }
+      res.render("settings", { user });
     }
-  });
+  } catch(err){
+    console.log(err);
+  }
 });
+
+  
 
 router.get("/logout", function (req, res) {
   req.logout((err) => {
