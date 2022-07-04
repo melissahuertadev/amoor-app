@@ -24,7 +24,7 @@ router.get("/success", ensureAuthenticated, (req, res) =>
 );
 
 router.get("/:id/edit", ensureAuthenticated, async (req, res) => {
-  let id = req.params.id;
+  const id = req.params.id;
 
   Amoor.findById(id, function (err, foundAmoor) {
     if (!err) {
@@ -85,6 +85,24 @@ router.post("/new", async (req, res) => {
 /* Edit and existing Amoor after passing same validations
  * as when it's created.
  */
+router.put("/:id", async (req, res) => {
+  const submittedAmoor = req.body;
+  const { id } = req.params;
+  let errors = [];
+
+  errors = validateAmoor(submittedAmoor);
+
+  if (errors.length > 0) {
+    res.render("amoors/edit", {
+      errors,
+      _id: req.params.id,
+      ...submittedAmoor,
+    });
+  } else {
+    await Amoor.findByIdAndUpdate(id, {...submittedAmoor});
+    res.redirect("/users/settings");
+  }
+});
 
 /****************** Delete an existing Amoor ******************/
 router.delete("/:id", async function(req, res){
