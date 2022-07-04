@@ -30,8 +30,8 @@ router.get("/settings", function (req, res) {
     } else {
       if (foundUser) {
         if (req.isAuthenticated()) {
-          console.log(foundUser);
-          console.log(foundUser.amoors);
+          /* console.log(foundUser);
+          console.log(foundUser.amoors); */
           res.render("settings", {
             name: foundUser.username,
             amoors: foundUser.amoors,
@@ -66,7 +66,7 @@ router.post("/signup", function (req, res) {
   errors = validateUser(submittedUser);
 
   if (errors.length > 0) {
-    res.render("signup", {
+    res.render("users/signup", {
       errors,
       ...submittedUser,
     });
@@ -76,7 +76,7 @@ router.post("/signup", function (req, res) {
       if (user) {
         //E-mail exists
         errors.push({ msg: "E-mail is already registered" });
-        res.render("signup", {
+        res.render("users/signup", {
           errors,
           ...submittedUser,
         });
@@ -85,7 +85,7 @@ router.post("/signup", function (req, res) {
           if (user) {
             //Username exists
             errors.push({ msg: "Username is already registered" });
-            res.render("signup", {
+            res.render("users/signup", {
               errors,
               ...submittedUser,
             });
@@ -130,10 +130,6 @@ router.post(
 );
 
 /*********** Create and Delete Amoor ***********/
-//Create
-router.get("/:id/amoors/new", function (req, res) {
-
-});
 
 //Delete
 router.post("/delete", function (req, res) {
