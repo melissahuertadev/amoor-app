@@ -180,12 +180,21 @@
         margin-left: 42px;
     }
 
-    .btn-delete {
+    .btn-crud {
         font-size: 1.6rem;
     }
-    
+
+    .btn-crud:nth-child(odd) {
+        margin-right: 8px;
+    }
+
     .footer-creator {
         font-size: 0.95rem;
+    }
+
+    /* Amoor Crud */
+    .amoor-crud {
+        height: 42px;
     }
 }
 

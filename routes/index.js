@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { isCelebrationDay } = require("../js/utils");
 const User = require("../models/User");
+const Amoor = require("../models/Amoor");
 
 /***************** Accesible Views *****************/
 /* The following views don't need authentication:
@@ -20,17 +21,17 @@ router.get("/home", function (req, res) {
 });
 
 router.get("/amoors", function (req, res) {
-  User.find({ amoors: { $ne: null } }, function (err, foundUsers) {
+  Amoor.find({ $ne: null }, function (err, foundAmoors) {
     if (err) {
       console.log(err);
     } else {
-      if (foundUsers) {
+      if (foundAmoors) {
         if (req.isAuthenticated()) {
-          res.render("amoors", { auth: "auth", usersWithAmoors: foundUsers, isCelebrationDay: isCelebrationDay });
+          res.render("amoors", { auth: "auth", userId: req.user.id, amoors: foundAmoors, isCelebrationDay: isCelebrationDay });
         } else {
           res.render("amoors", {
-            auth: "non-auth",
-            usersWithAmoors: foundUsers, isCelebrationDay: isCelebrationDay
+            auth: "non-auth", userId: "",
+            amoors: foundAmoors, isCelebrationDay: isCelebrationDay
           });
         }
       }
