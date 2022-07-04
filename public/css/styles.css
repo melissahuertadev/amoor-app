@@ -320,7 +320,16 @@ header {
   font-size: 1.25rem;
 }
 
+.amoor-crud {
+  display: flex;
+  height: 28px;
+  text-align: center;
+  align-self: center;
+}
+
 .btn-crud {
+  display: flex;
+  height: 100%;
   text-align: center;
   justify-content: center;
   font-size: 1rem;
