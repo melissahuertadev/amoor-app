@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const passport = require("passport");
+const methodOverride = require("method-override");
 
 const path = require("path");
 const flash = require("connect-flash");
@@ -36,6 +37,8 @@ app.set("views", path.join(__dirname, "views"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize({ replaceWith: "_" }));
+
+app.use(methodOverride("_method"));
 
 app.set("port", process.env.PORT || 3000);
 
@@ -88,6 +91,7 @@ app.use((req, res, next) => {
 /******************* Routes *******************/
 app.use("/", require("./routes/index"));
 app.use("/users", require("./routes/users"));
+app.use("/amoors", require("./routes/amoors"));
 
 app.use((req, res) => {
   res.status(404).render("404");
