@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 const methodOverride = require("method-override");
 
-//const passport = require("passport");
-//const passportLocalMongoose = require("passport-local-mongoose");
 const { ensureAuthenticated } = require("../config/auth");
 
 const { titleCase } = require("../js/utils");
@@ -11,6 +9,10 @@ const { validateAmoor } = require("../js/validation");
 
 const User = require("../models/User");
 const Amoor = require("../models/Amoor");
+
+const app = express();
+
+app.use(methodOverride("_method"));
 
 /****************** Auth Required Views ******************/
 /* The following views NEED authentication:
@@ -22,23 +24,16 @@ router.get("/success", ensureAuthenticated, (req, res) =>
 );
 
 router.get("/:id/edit", ensureAuthenticated, async (req, res) => {
-  User.findById(req.user.id, function (err, foundUser) {
-    let index = req.params.id;
-    let amoorToEdit;
+  let id = req.params.id;
 
-    foundUser.amoors.forEach(amoor => {
-      if(index === amoor.id) {
-        amoorToEdit = amoor;
-      }
-    });
-
+  Amoor.findById(id, function (err, foundAmoor) {
     if (!err) {
       res.render("amoors/edit", {
-        _id: req.params.id,
-        name1: amoorToEdit.name1,
-        name2: amoorToEdit.name2,
-        date: amoorToEdit.date,
-        message: amoorToEdit.message,
+        _id: id,
+        name1: foundAmoor.name1,
+        name2: foundAmoor.name2,
+        date: foundAmoor.date,
+        message: foundAmoor.message,
       });
     }
   });
@@ -86,6 +81,17 @@ router.post("/new", async (req, res) => {
   }
 });
 
+/****************** Update an existing Amoor ******************/
+/* Edit and existing Amoor after passing same validations
+ * as when it's created.
+ */
 
+/****************** Delete an existing Amoor ******************/
+router.delete("/:id", async function(req, res){
+  const { id } = req.params;
+
+  await Amoor.findByIdAndDelete(id);
+  res.redirect("/users/settings");
+});
 
 module.exports = router;

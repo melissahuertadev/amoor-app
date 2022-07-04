@@ -31,7 +31,7 @@ router.get("/settings", async function (req, res) {
     if(!user){
       return res.status(400);
     } else {
-      res.render("settings", { user });
+      res.render("users/settings", { user });
     }
   } catch(err){
     console.log(err);
