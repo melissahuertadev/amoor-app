@@ -12,11 +12,11 @@ const User = require("../models/User");
 /* The following views don't need authentication:
  * Sign In, Sign Up            */
 router.get("/signup", (req, res) => {
-  res.render("signup");
+  res.render("users/signup");
 });
 
 router.get("/signin", (req, res) => {
-  res.render("signin");
+  res.render("users/signin");
 });
 
 /*************** Auth Required Views ***************/
@@ -30,6 +30,8 @@ router.get("/settings", function (req, res) {
     } else {
       if (foundUser) {
         if (req.isAuthenticated()) {
+          console.log(foundUser);
+          console.log(foundUser.amoors);
           res.render("settings", {
             name: foundUser.username,
             amoors: foundUser.amoors,
@@ -51,8 +53,6 @@ router.get("/logout", function (req, res) {
   });
 });
 
-router.get("/add", ensureAuthenticated, (req, res) => res.render("add"));
-
 router.get("/success", ensureAuthenticated, (req, res) =>
   res.render("success")
 );
@@ -60,8 +60,6 @@ router.get("/success", ensureAuthenticated, (req, res) =>
 /*************** Authentication ***************/
 //Sign Up
 router.post("/signup", function (req, res) {
- // const { username, email, password, passwordConfirmation } = req.body;
-
   const submittedUser = req.body;
   let errors = [];
 
@@ -132,44 +130,9 @@ router.post(
 );
 
 /*********** Create and Delete Amoor ***********/
-/* Add a New Amoor after passing validations:
- * - first and second field should not be empty,
- * contain at least 2 characters, contain only
- * letters
- * - date can not be greater than current date
- * - message should not be empty and contain at
- * least one character.
- */
-//Add
-router.post("/add", function (req, res) {
-  const submittedAmoor = req.body;
-  let errors = [];
+//Create
+router.get("/:id/amoors/new", function (req, res) {
 
-  errors = validateAmoor(submittedAmoor);
-
-  if (errors.length > 0) {
-    res.render("add", {
-      errors,
-      ...submittedAmoor,
-    });
-  } else {
-    // Validation passed
-    submittedAmoor.name1 = titleCase(submittedAmoor.name1);
-    submittedAmoor.name2 = titleCase(submittedAmoor.name2);
-
-    User.findById(req.user.id, function (err, foundUser) {
-      if (err) {
-        console.log(err);
-      } else {
-        if (foundUser) {
-          foundUser.amoors.push(submittedAmoor);
-          foundUser.save(function () {
-            res.redirect("/users/success");
-          });
-        }
-      }
-    });
-  }
 });
 
 //Delete
