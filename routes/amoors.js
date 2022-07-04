@@ -108,8 +108,19 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async function(req, res){
   const { id } = req.params;
 
-  await Amoor.findByIdAndDelete(id);
-  res.redirect("/users/settings");
+  Amoor.findByIdAndDelete(id, function(err, foundAmoor){
+    if(err){
+      console.log(err);
+    } else {
+      User.findById(req.user._id, function(err, user) {
+        var index = user.amoors.indexOf(foundAmoor.id);
+        user.amoors.splice(index, 1);
+        user.save();
+        req.flash('success_msg', 'Amoor successfully deleted');
+        res.redirect("/users/settings");
+      });
+    }
+  });
 });
 
 module.exports = router;
