@@ -6,7 +6,7 @@
         <div id="settings-accordion">
             <!-- Your amoors toggle -->
             <h5 class="settings-subtitle">
-                <button class="btn settings-subtitle-btn" data-toggle="collapse" data-target="#your-amoors"
+                <button class="btn settings-subtitle-btn collapsed" data-toggle="collapse" data-target="#your-amoors"
                     aria-expanded="false" aria-controls="your-amoors">
                     > Your amoors
                 </button>
@@ -34,9 +34,9 @@
                                 <% } %>
             </div>
             <%- include('../partials/faq') %>
-                <div class="settings-logout">
-                    <a class="btn btn-dark" href="/users/logout" role="button">Log out</a>
-                </div>
+            <div class="settings-logout">
+                <a class="btn btn-dark" href="/users/logout" role="button">Log out</a>
+            </div>
         </div>
     </section>
 
