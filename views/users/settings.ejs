@@ -5,39 +5,65 @@
             </strong></h5>
         <div id="settings-accordion">
             <%- include ('../partials/messages') %>
-            <!-- Your amoors toggle -->
-            <h5 class="settings-subtitle">
-                <button class="btn settings-subtitle-btn collapsed" data-toggle="collapse" data-target="#your-amoors"
-                    aria-expanded="false" aria-controls="your-amoors">
-                    > Your amoors
-                </button>
-            </h5>
-            <div id="your-amoors" data-parent="#settings-accordion">
-                <%if (user.amoors.length <=0 ){%>
-                    <h5 class="your-amoors-msg">You haven't shared any amoor yet :(</h5>
-
-                    <!-- All the amoors created by an user -->
-                    <%} else { %>
-                        <% user.amoors.forEach((amoor, index)=> { %>
-                            <div class="amoor-item">
-                                <p>
-                                    <%= amoor.name1 %> & <%= amoor.name2 %>
-                                </p>
-                                <div class="amoor-crud">
-                                    <a href="/amoors/<%= amoor.id %>/edit" name="edit" value="<%= amoor.id %>"
-                                        class="btn-outline btn-crud"> Edit </a>
-                                    <form action="/amoors/<%=amoor.id%>?_method=DELETE" method="POST">
-                                        <button class="btn-dark btn-crud">Delete</button>
-                                    </form>
+                <!-- My amoors toggle -->
+                <h5 class="settings-subtitle">
+                    <button class="btn settings-subtitle-btn" data-toggle="collapse" data-target="#my-amoors"
+                        aria-expanded="false" aria-controls="my-amoors">
+                        > My amoors
+                    </button>
+                </h5>
+                <div id="my-amoors" class="collapse" data-parent="#settings-accordion">
+                    <%if (user.amoors.length <=0 ){%>
+                        <h5 class="your-amoors-msg">You haven't shared any amoor yet :(</h5>
+                        <!-- All the amoors created by an user -->
+                        <%} else { %>
+                            <% user.amoors.forEach((amoor, index)=> { %>
+                                <div class="amoor-item">
+                                    <p>
+                                        <%= amoor.name1 %> & <%= amoor.name2 %>
+                                    </p>
+                                    <div class="amoor-crud">
+                                        <a href="/amoors/<%= amoor.id %>/edit" name="edit" value="<%= amoor.id %>"
+                                            class="btn-outline btn-crud"> Edit </a>
+                                        <form action="/amoors/<%=amoor.id%>?_method=DELETE" method="POST">
+                                            <button class="btn-dark btn-crud">Delete</button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
                             <% }); %>
-                                <% } %>
-            </div>
-            <%- include('../partials/faq') %>
-            <div class="settings-logout">
-                <a class="btn btn-dark" href="/users/logout" role="button">Log out</a>
-            </div>
+                        <% } %>
+                </div>
+
+                <!-- My account toggle -->
+                <h5 class="settings-subtitle">
+                    <button class="btn settings-subtitle-btn" data-toggle="collapse" data-target="#my-account"
+                        aria-expanded="false" aria-controls="my-account">
+                        > My account
+                    </button>
+                </h5>
+                <div id="my-account" class="collapse" data-parent="#settings-accordion">
+                    <div class="myaccount-item">
+                        <h6 class="myaccount-subtitle">
+                            <a class="btn myaccount-item-option" href="/users/<%= user.id %>/update-password">
+                                Change Password
+                            </a>
+                        </h6>
+                    </div>
+                    <div class="myaccount-item">
+                        <h6 class="myaccount-subtitle">
+                            <a class="btn myaccount-item-option" href="/users/<%= user.id %>/delete">
+                                Delete account
+                            </a>
+                        </h6>
+                    </div>
+                </div>
+
+                <!-- FAQ toggle -->
+                <%- include('../partials/faq') %>
+                <!-- Logout button -->
+                <div class="settings-logout">
+                    <a class="btn btn-dark" href="/users/logout" role="button">Log out</a>
+                </div>
         </div>
     </section>
 
