@@ -28,6 +28,29 @@ function validateUser(newUser) {
   return errors;
 }
 
+//Update password validation
+function validatePassword(upd) {
+  const { password, passwordConfirmation } = upd;
+  const errors = [];
+
+  //Check required fields
+  if (!password || !passwordConfirmation) {
+    errors.push({ msg: "Please fill all fields." });
+  }
+
+  //Check passwords matching
+  if (password !== passwordConfirmation) {
+    errors.push({ msg: "Passwords do not match." });
+  }
+
+  //Check pass length
+  if (password && password.length < 5) {
+    errors.push({ msg: "Password must contain 5 or more characters" });
+  }
+  
+  return errors;
+}
+
 let today = new Date();
 today.setHours(0, 0, 0, 0);
 
@@ -55,4 +78,4 @@ function validateAmoor(amoorItem) {
   return errors;
 }
 
-module.exports = { validateUser, validateAmoor };
+module.exports = { validateUser, validatePassword, validateAmoor };

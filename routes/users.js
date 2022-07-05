@@ -4,7 +4,7 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const { ensureAuthenticated } = require("../config/auth");
 const { titleCase, onlyLetters } = require("../js/utils");
-const { validateUser, validateAmoor } = require("../js/validation");
+const { validateUser, validatePassword } = require("../js/validation");
 
 const User = require("../models/User");
 const Amoor = require("../models/Amoor");
@@ -12,12 +12,23 @@ const Amoor = require("../models/Amoor");
 /***************** Accesible Views *****************/
 /* The following views don't need authentication:
  * Sign In, Sign Up            */
+//Sign Up
 router.get("/signup", (req, res) => {
   res.render("users/signup");
 });
 
+//Sign In
 router.get("/signin", (req, res) => {
   res.render("users/signin");
+});
+
+//Forgot Password?
+router.get("/forgot-password", function(req, res){
+
+});
+
+router.post("/forgot-password", function(req, res){
+
 });
 
 /*************** Auth Required Views ***************/
@@ -37,8 +48,6 @@ router.get("/settings", async function (req, res) {
     console.log(err);
   }
 });
-
-  
 
 router.get("/logout", function (req, res) {
   req.logout((err) => {
@@ -127,20 +136,74 @@ router.post(
   }
 );
 
-/*********** Create and Delete Amoor ***********/
+/*********** Account Settings ***********/
+//Update Password
+router.get("/:id/update-password", ensureAuthenticated, function(req, res){
+  const { id } = req.params;
 
-//Delete
-router.post("/delete", function (req, res) {
-  if (req.isAuthenticated()) {
-    User.findById(req.user.id, function (err, foundUser) {
-      foundUser.amoors.splice(req.body.index, 1);
-      foundUser.save(function (err) {
-        if (!err) {
-          res.redirect("/users/settings");
-        }
-      });
+  res.render("users/password-upd", {id: id});
+});
+
+router.put("/:id/update-password", ensureAuthenticated, async function(req, res){
+  const { id } = req.params;
+  const update = req.body;
+  let errors = [];
+
+  errors = validatePassword(update);
+
+  if (errors.length > 0) {
+    res.render("users/password-upd", {id, errors});
+  } else {
+    // Validation passed
+    User.findById(id).then(function(foundUser){
+      if(foundUser){
+        foundUser.setPassword(update.password, function(){
+          foundUser.save();
+        });
+      }
     });
+    console.log("new password is: ", update.password);
+    req.flash('success_msg', 'Your password was successfully updated');
+    res.redirect("/users/settings");
   }
+});
+
+
+//Delete Account
+router.get("/:id/delete", ensureAuthenticated, async (req, res) => {
+  const id = req.params.id;
+
+  User.findById(id, function (err, foundUser) {
+    if (!err) {
+      res.render("users/delete", {
+        _id: id,
+      });
+    }
+  });
+});
+
+
+router.delete("/:id", async function(req, res){
+  const { id } = req.params;
+  const { email } = req.body;
+
+  User.findById(id, async function(err, foundUser){
+    if(!err) {
+      if(email === foundUser.email || email === foundUser.username){
+        //Remove User's amoors
+        if (foundUser.amoors.length){
+          const res = await Amoor.deleteMany({_id: { $in: foundUser.amoors}});
+        }
+        //Remove User
+        foundUser.remove();
+        req.flash('success_msg', 'Your account was successfully deleted');
+        res.redirect('/amoors');
+      } else {
+        req.flash('error', 'Username or e-mail does not match.');
+        res.redirect(`/users/${id}/delete`);
+      }
+    }
+  });
 });
 
 module.exports = router;

@@ -49,7 +49,7 @@
         padding: 8px 25px;
     }
 
-    .faq-subtitle .collapsed:after {
+    .faq-subtitle .collapsed:after, .myaccount-subtitle .btn:after {
         left: 42px;
     }
 
