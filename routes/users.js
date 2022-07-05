@@ -12,12 +12,23 @@ const Amoor = require("../models/Amoor");
 /***************** Accesible Views *****************/
 /* The following views don't need authentication:
  * Sign In, Sign Up            */
+//Sign Up
 router.get("/signup", (req, res) => {
   res.render("users/signup");
 });
 
+//Sign In
 router.get("/signin", (req, res) => {
   res.render("users/signin");
+});
+
+//Forgot Password?
+router.get("/forgot-password", function(req, res){
+
+});
+
+router.post("/forgot-password", function(req, res){
+
 });
 
 /*************** Auth Required Views ***************/
@@ -37,8 +48,6 @@ router.get("/settings", async function (req, res) {
     console.log(err);
   }
 });
-
-  
 
 router.get("/logout", function (req, res) {
   req.logout((err) => {
@@ -127,20 +136,53 @@ router.post(
   }
 );
 
-/*********** Create and Delete Amoor ***********/
 
-//Delete
-router.post("/delete", function (req, res) {
-  if (req.isAuthenticated()) {
-    User.findById(req.user.id, function (err, foundUser) {
-      foundUser.amoors.splice(req.body.index, 1);
-      foundUser.save(function (err) {
-        if (!err) {
-          res.redirect("/users/settings");
-        }
+/*********** Account Settings ***********/
+//Update Password
+
+router.get("/reset-password", function(req, res){
+
+});
+
+router.post("/reset-password", function(req, res){
+
+});
+
+//Delete Account
+router.get("/:id/delete", ensureAuthenticated, async (req, res) => {
+  const id = req.params.id;
+
+  User.findById(id, function (err, foundUser) {
+    if (!err) {
+      res.render("users/delete", {
+        _id: id,
       });
-    });
-  }
+    }
+  });
+});
+
+
+router.delete("/:id", async function(req, res){
+  const { id } = req.params;
+  const { email } = req.body;
+
+  User.findById(id, async function(err, foundUser){
+    if(!err) {
+      if(email === foundUser.email || email === foundUser.username){
+        //Remove User's amoors
+        if (foundUser.amoors.length){
+          const res = await Amoor.deleteMany({_id: { $in: foundUser.amoors}});
+        }
+        //Remove User
+        foundUser.remove();
+        req.flash('success_msg', 'Your account was successfully deleted');
+        res.redirect('/amoors');
+      } else {
+        req.flash('error', 'Username or e-mail does not match.');
+        res.redirect(`/users/${id}/delete`);
+      }
+    }
+  });
 });
 
 module.exports = router;
