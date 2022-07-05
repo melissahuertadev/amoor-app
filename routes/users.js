@@ -4,7 +4,7 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const { ensureAuthenticated } = require("../config/auth");
 const { titleCase, onlyLetters } = require("../js/utils");
-const { validateUser, validateAmoor } = require("../js/validation");
+const { validateUser, validatePassword } = require("../js/validation");
 
 const User = require("../models/User");
 const Amoor = require("../models/Amoor");
@@ -136,17 +136,38 @@ router.post(
   }
 );
 
-
 /*********** Account Settings ***********/
 //Update Password
+router.get("/:id/update-password", ensureAuthenticated, function(req, res){
+  const { id } = req.params;
 
-router.get("/reset-password", function(req, res){
-
+  res.render("users/password-upd", {id: id});
 });
 
-router.post("/reset-password", function(req, res){
+router.put("/:id/update-password", ensureAuthenticated, async function(req, res){
+  const { id } = req.params;
+  const update = req.body;
+  let errors = [];
 
+  errors = validatePassword(update);
+
+  if (errors.length > 0) {
+    res.render("users/password-upd", {id, errors});
+  } else {
+    // Validation passed
+    User.findById(id).then(function(foundUser){
+      if(foundUser){
+        foundUser.setPassword(update.password, function(){
+          foundUser.save();
+        });
+      }
+    });
+    console.log("new password is: ", update.password);
+    req.flash('success_msg', 'Your password was successfully updated');
+    res.redirect("/users/settings");
+  }
 });
+
 
 //Delete Account
 router.get("/:id/delete", ensureAuthenticated, async (req, res) => {
