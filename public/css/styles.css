@@ -404,6 +404,10 @@ header {
   text-align: -webkit-center;
 }
 
+form input[type="text"], form input[type="email"] {
+  text-transform: lowercase;
+}
+
 /** Messages **/
 .succeed-msg {
   color: darkslateblue;
